@@ -97,6 +97,59 @@ function insert_array_db($table, $arr_columns, $return_id = false) {
 		return false;
 }
 
+function insert_array_db_multi($table, $arr_columns) {
+	# multiple inserts allowed in one sentence
+	# input $arr_columns must be like:
+	/*Array
+	(
+    [Temperature] => Array
+        (
+            [0] => 16.4
+            [1] => 16.4
+            [2] => 16.4
+        )
+
+    [Wattage] => Array
+        (
+            [0] => 00383
+            [1] => 00403
+            [2] => 00395
+        )
+
+    [CC_Time] => Array
+        (
+            [0] => 2015-02-06 06:00:03
+            [1] => 2015-02-06 06:00:09
+            [2] => 2015-02-06 06:00:15
+        )
+	)*/
+
+	global $conex;
+	
+	$columns = '('. implode_keys(', ', $arr_columns) .')';
+	$arr_keys = array_keys($arr_columns);
+	$str_values = '';
+	$first = true;
+	foreach($arr_columns[$arr_keys[0]] as $i => $value) {
+		if($first) $first = false; else $str_values.=',';
+		$str_values .= '(';
+		$first2 = true;
+		foreach($arr_keys as $key) {
+			if($first2) $first2 =  false; else $str_values.= ',';
+			$str_values .= '\''. $arr_columns[$key][$i] .'\'';
+		}
+		$str_values .= ')';
+	}
+	
+	$sql = 'INSERT INTO '. $table . $columns .' VALUES '. $str_values;
+
+	$insert = my_query($sql, $conex); 
+	if($insert)
+		return true;
+	else
+		return false;
+}
+
 function update_array_db($table, $keys, $values, $arr_columns, $extra_condition = '') {
 	global $conex;
 	# build conditions
@@ -330,7 +383,7 @@ function print_combo_db ($parameters) {
 }
 
 function print_money($amount, $currency = 'EUR') {
-	return number_format($amount, 2, '.', ' ') .' €';
+	return number_format($amount, 2, '.', ' ') .' Â€';
 }
 
 function add_zeroes($value) {
@@ -442,8 +495,8 @@ function get_random_pwd($length = 4) {
 
 function digito_control($ent_ofi, $num_cuenta) {
 	$arr_pesos = array(1,2,4,8,5,10,9,7,3,6);
-	$dc1 = 0;	// sale del código de entidad y oficina
-	$dc2 = 0;	// sale del número de cuenta
+	$dc1 = 0;	// sale del cÃ³digo de entidad y oficina
+	$dc2 = 0;	// sale del nÃºmero de cuenta
 	$i = 8;
 	
 	while($i > 0) {
