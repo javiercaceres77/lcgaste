@@ -1,6 +1,7 @@
 <?php
 #ini_set('display_errors', 0);
 $_SESSION['login'] = posix_getlogin();
+pa($_SESSION['login']);
 # Includes  ----------------------------------
 
 include '/var/www/lcgaste/inc/config_dom.php';
