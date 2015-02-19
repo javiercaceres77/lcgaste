@@ -33,7 +33,7 @@ switch($conf_db_type) {
 function my_query($str_query, $conex) {
 	global $conf_db_type, $conf_is_prod;
 	
-	$queries2log = array('UPD', 'DEL', 'INS', 'DRO', 'ALT', 'TRU');
+	$queries2log = array('UPD', 'DEL', 'DRO', 'ALT', 'TRU');
 	
 	if(in_array(strtoupper(substr($str_query,0,3)), $queries2log) && !$conf_is_prod)
 		@write_log('db_trans', $str_query);	
