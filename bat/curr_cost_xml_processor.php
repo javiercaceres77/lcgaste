@@ -17,7 +17,7 @@ unset($_POST, $_GET);
 # some variables use objects --------------------------------
 $xml_files_path = '/home/javipi/ccxmls/'; // '/media/usb/ccxmls/';
 $bin_path = '/home/javipi/bin/'; //'/media/usb/bin/';
-$num_files_to_process = 4;
+$num_files_to_process = 18;
 
 # scan directory
 $arr_directory = scandir($xml_files_path);
