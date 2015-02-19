@@ -1,12 +1,16 @@
 <?php
-#ini_set('display_errors', 0);
-$_SESSION['login'] = posix_getlogin();
-pa($_SESSION['login']);
+ini_set('display_errors', 1);
+
 # Includes  ----------------------------------
 include '/var/www/lcgaste/inc/config_dom.php';
 include $conf_include_path . 'comm.php';
 include $conf_include_path . 'connect.php';
 include $conf_include_path . 'oops_comm.php';
+
+//$_SESSION['login'] = posix_getlogin();
+//pa($_SESSION);
+//exit();
+
 date_default_timezone_set($conf_timezone);
 # Sanitize get and post  ----------------------------------
 sanitize_input();
@@ -16,11 +20,12 @@ unset($_POST, $_GET);
 # some variables use objects --------------------------------
 $xml_files_path = '/home/javipi/ccxmls/'; // '/media/usb/ccxmls/';
 $bin_path = '/home/javipi/bin/'; //'/media/usb/bin/';
-$num_files_to_process = 3;
+$num_files_to_process = 4;
 # scan directory
 $arr_directory = scandir($xml_files_path);
 # remove the last file (the one that is being written now)
 array_pop($arr_directory);
+
 foreach($arr_directory as $file_name) {
 	$num_files_to_process--;	if($num_files_to_process <= 0) break;
 	
@@ -38,10 +43,10 @@ foreach($arr_directory as $file_name) {
 			$objxml = new SimpleXMLElement($line);
 			$obj_line_time = new my_time($objxml->time);
 			$this_min = $obj_line_time->minute;
-			$accum_temp = (int) $objxml->tmpr;
-			$accum_watt = (int) $objxml->ch1->watts;
+			$accum_temp = (float) $objxml->tmpr;
+			$accum_watt = (float) $objxml->ch1->watts;
 			$count = 1;
-			
+
 			$arr_ins_regular = array();
 			#$arr_ins_history = array();
 			while(($line = fgets($file, 4096)) !== false) {
@@ -54,8 +59,8 @@ foreach($arr_directory as $file_name) {
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
 						if($obj_line_time->minute == $this_min) {
-							$accum_temp+= (int) $objxml->tmpr;
-							$accum_watt+= (int) $objxml->ch1->watts;
+							$accum_temp+= (float) $objxml->tmpr;
+							$accum_watt+= (float) $objxml->ch1->watts;
 							$count++;
 						}
 						else {
@@ -63,8 +68,8 @@ foreach($arr_directory as $file_name) {
 							$arr_ins_regular['Temperature'][] = $accum_temp / $count;
 							$arr_ins_regular['Wattage'][] = $accum_watt / $count;
 							$this_min = $obj_line_time->minute;
-							$accum_temp+= (int) $objxml->tmpr;
-							$accum_watt+= (int) $objxml->ch1->watts;
+							$accum_temp = (float) $objxml->tmpr;
+							$accum_watt = (float) $objxml->ch1->watts;
 							$count = 1;
 						}
 					}	//	elseif($objxml->tmpr) {	
