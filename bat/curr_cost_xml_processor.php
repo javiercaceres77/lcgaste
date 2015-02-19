@@ -1,26 +1,24 @@
 <?php
-ini_set('display_errors', 1);
-
+#ini_set('display_errors', 1);
 # Includes  ----------------------------------
 include '/var/www/lcgaste/inc/config_dom.php';
 include $conf_include_path . 'comm.php';
 include $conf_include_path . 'connect.php';
 include $conf_include_path . 'oops_comm.php';
-
-//$_SESSION['login'] = posix_getlogin();
-//pa($_SESSION);
-//exit();
-
 date_default_timezone_set($conf_timezone);
+
 # Sanitize get and post  ----------------------------------
 sanitize_input();
 unset($_POST, $_GET);
+
 # some general use objects --------------------------------
 //$now = new date_time('now');
+
 # some variables use objects --------------------------------
 $xml_files_path = '/home/javipi/ccxmls/'; // '/media/usb/ccxmls/';
 $bin_path = '/home/javipi/bin/'; //'/media/usb/bin/';
 $num_files_to_process = 4;
+
 # scan directory
 $arr_directory = scandir($xml_files_path);
 # remove the last file (the one that is being written now)
@@ -36,7 +34,7 @@ foreach($arr_directory as $file_name) {
 		# open file
 		if($file_date)
 			$file = fopen($xml_files_path . $file_name, "r");
-		
+
 		if($file) {
 			# Get one line and initialise values
 			$line = fgets($file, 4096);
@@ -75,17 +73,13 @@ foreach($arr_directory as $file_name) {
 					}	//	elseif($objxml->tmpr) {	
 				}	//	while(($line = fgets($file, 4096)) !== false) {
 				# insert the last value after the file
-				
 				$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
 				$arr_ins_regular['Temperature'][] = $accum_temp / $count;
 				$arr_ins_regular['Wattage'][] = $accum_watt / $count;
 		}	//		if($file) {
 	
-		fclose($file);	
-		
-		pa($arr_ins_regular);
-		exit();
-		
+		fclose($file);
+	
 		$ok_ins_reg = insert_array_db_multi('Raw_Data', $arr_ins_regular);
 		$msg = 'Inserted '. count($arr_ins_regular['CC_Time']) .' records from file: '. $file_name;
 		if($ok_ins_reg)
