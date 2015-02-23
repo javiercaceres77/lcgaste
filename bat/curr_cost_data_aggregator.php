@@ -13,22 +13,35 @@ sanitize_input();
 unset($_POST, $_GET);
 
 # some general use objects --------------------------------
-$now = new date_time('now');
-$end_time = $now->plus_mins(-60);    #usually analyse only up until one hour ago
-$max_analysis_days = 3;	 #maximum number of days that is analysed
+
+
+//$now = new date_time('now');
+//$end_time = $now->plus_mins(-60);	#usually analyse only up until one hour ago
+//$max_analysis_days = 3;	 #maximum number of days that is analysed
 
 # ---------------------------------------------------------
 # calculate the 1min aggregates ---------------------------
 # ---------------------------------------------------------
 
+# Select the latest 10min aggregate
+$sql = 'SELECT MAX(End_Datetime) AS Start_max
+FROM Aggregate_Data
+WHERE Aggregate_Period_Type = \'10min\'';
+
+$sel_max_10m = my_query($sql, $conex);
+$obj_max_10m = new date_time(my_result($sel_max_10m, 0, 'Start_max'));
+
 # Select the latest 1min aggregate
 
-$sql = 'SELECT MAX(Start_Datetime) AS Start_max
-FROM Aggregate_Data
-WHERE Aggregate_Period = \'min\'';
+$sql = 'SELECT MAX( CC_Time ) as Start_max FROM Raw_Data';
 
-$sel_max = my_query($sql, $conex);
-$start_time = new date_time(my_result($sel_max, 0, 'Start_max'));
+$sel_max_1m = my_query($sql, $conex);
+$obj_max_1m = new date_time(my_result($sel_max_1m, 0, 'Start_max'));
+
+pa($obj_max_10m);
+pa($obj_max_1m);
+
+exit();
 
 if($start_time->datetime == '0000-00-00 00:00:00')
 	$start_time = new date_time('2015-02-06 00:00:00');	// if null this is the default value
