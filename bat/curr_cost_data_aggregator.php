@@ -119,23 +119,23 @@ while($num_hours_to_aggregate > 0) {
 	}	//	foreach($arr_ins_10m['Start_Datetime'] as $i => $rec) {
 	
 	
-	$arr_ins_1h['Start_Datetime'][]			= $obj_max_10m->datetime;
-	$arr_ins_1h['End_Datetime'][]			= $obj_max_plus59->datetime;
-	$arr_ins_1h['Aggregate_Period_Type'][]	= 'hour';
-	$arr_ins_1h['Average_Wattage'][]		= $sum_watt / $count;
-	$arr_ins_1h['Average_Temperature'][]	= $sum_temp / $count;
-	$arr_ins_1h['Max_Wattage'][]			= $max_watt;
-	$arr_ins_1h['Min_Wattage'][]			= $min_watt;
-	$arr_ins_1h['Max_Temperature'][]		= $max_temp;
-	$arr_ins_1h['Min_Temperature'][]		= $min_temp;
-	$arr_ins_1h['Max_Watt_Datetime'][]		= $max_watt_time;
-	$arr_ins_1h['Min_Watt_Datetime'][]		= $min_watt_time;
-	$arr_ins_1h['Max_Temp_Datetime'][]		= $max_temp_time;
-	$arr_ins_1h['Min_Temp_Datetime'][]		= $min_temp_time;
-	$arr_ins_1h['Period_Description'][]		= $obj_max_10m->datetime;
-	$arr_ins_1h['Complete_Period_Ind'][]	= 'Y';
-	$arr_ins_1h['Average_Watt_Weight'][]	= 1;
-	$arr_ins_1h['Average_Temp_Weight'][]	= 1;
+	$arr_ins_1h['Start_Datetime']			= $obj_max_10m->datetime;
+	$arr_ins_1h['End_Datetime']				= $obj_max_plus59->datetime;
+	$arr_ins_1h['Aggregate_Period_Type']	= 'hour';
+	$arr_ins_1h['Average_Wattage']			= $sum_watt / $count;
+	$arr_ins_1h['Average_Temperature']		= $sum_temp / $count;
+	$arr_ins_1h['Max_Wattage']				= $max_watt;
+	$arr_ins_1h['Min_Wattage']				= $min_watt;
+	$arr_ins_1h['Max_Temperature']			= $max_temp;
+	$arr_ins_1h['Min_Temperature']			= $min_temp;
+	$arr_ins_1h['Max_Watt_Datetime']		= $max_watt_time;
+	$arr_ins_1h['Min_Watt_Datetime']		= $min_watt_time;
+	$arr_ins_1h['Max_Temp_Datetime']		= $max_temp_time;
+	$arr_ins_1h['Min_Temp_Datetime']		= $min_temp_time;
+	$arr_ins_1h['Period_Description']		= $obj_max_10m->datetime;
+	$arr_ins_1h['Complete_Period_Ind']		= 'Y';
+	$arr_ins_1h['Average_Watt_Weight']		= 1;
+	$arr_ins_1h['Average_Temp_Weight']		= 1;
 	
 	pa($arr_ins_1h);
 	pa($arr_ins_10m);
