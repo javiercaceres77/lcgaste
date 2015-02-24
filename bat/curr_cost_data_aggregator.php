@@ -91,11 +91,31 @@ while($num_hours_to_aggregate > 0) {
 		if($max_watt < $record['Wattage']) 		{	$max_watt = $record['Wattage'];		$max_watt_time = $record['CC_Time'];	}
 		if($min_watt > $record['Wattage']) 		{	$min_watt = $record['Wattage'];		$min_watt_time = $record['CC_Time'];	}
 		if($max_temp < $record['Temperature']) 	{	$max_temp = $record['Temperature'];	$max_temp_time = $record['CC_Time'];	}
-		if($min_temp < $record['Temperature']) 	{	$min_temp = $record['Temperature'];	$min_temp_time = $record['CC_Time'];	}
+		if($min_temp > $record['Temperature']) 	{	$min_temp = $record['Temperature'];	$min_temp_time = $record['CC_Time'];	}
 		$count++;
 		$sum_watt+= $record['Wattage'];
 		$sum_temp+= $record['Temperature'];
 	}	//	while($record = my_fetch_array($sel_raw)) {
+	
+	#last values are not added to the array because we are out of the loop so do it here:
+	$arr_ins_10m['Start_Datetime'][]		= substr($record['CC_Time'],0,14) . $this_10m .'0:00';
+	$arr_ins_10m['End_Datetime'][]			= substr($record['CC_Time'],0,14) . $this_10m .'9:00';
+	$arr_ins_10m['Aggregate_Period_Type'][]	= '10min';
+	$arr_ins_10m['Average_Wattage'][]		= $sum_watt / $count;
+	$arr_ins_10m['Average_Temperature'][]	= $sum_temp / $count;
+	$arr_ins_10m['Max_Wattage'][]			= $max_watt;
+	$arr_ins_10m['Min_Wattage'][]			= $min_watt;
+	$arr_ins_10m['Max_Temperature'][]		= $max_temp;
+	$arr_ins_10m['Min_Temperature'][]		= $min_temp;
+	$arr_ins_10m['Max_Watt_Datetime'][]		= $max_watt_time;
+	$arr_ins_10m['Min_Watt_Datetime'][]		= $min_watt_time;
+	$arr_ins_10m['Max_Temp_Datetime'][]		= $max_temp_time;
+	$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
+	$arr_ins_10m['Period_Description'][]	= $record['CC_Time'];
+	$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
+	$arr_ins_10m['Average_Watt_Weight'][]	= $count;
+	$arr_ins_10m['Average_Temp_Weight'][]	= $count;
+	
 	
 pa($arr_ins_10m);
 exit();	
