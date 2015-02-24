@@ -1,10 +1,10 @@
 <?php
 # Includes  ----------------------------------
 
-include '../inc/config.php';
-include '../inc/comm.php';
-include '../inc/connect.php';
-include '../inc/oops_comm.php';
+include '/var/www/lcgaste/inc/config_dom.php';
+include $conf_include_path . 'comm.php';
+include $conf_include_path . 'connect.php';
+include $conf_include_path . 'oops_comm.php';
 
 date_default_timezone_set($conf_timezone);
 
