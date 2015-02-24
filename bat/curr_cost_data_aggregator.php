@@ -27,14 +27,14 @@ unset($_POST, $_GET);
 $sql = 'SELECT MAX(End_Datetime) AS Start_max
 FROM Aggregate_Data
 WHERE Aggregate_Period_Type = \'10min\'';
-
+echo 'sql1: '. $sql;
 $sel_max_10m = my_query($sql, $conex);
 $obj_max_10m = new date_time(my_result($sel_max_10m, 0, 'Start_max'));
 
 # Select the latest 1min aggregate
 
 $sql = 'SELECT MAX( CC_Time ) as Start_max FROM Raw_Data';
-
+echo ' sql2: '. $sql;
 $sel_max_1m = my_query($sql, $conex);
 $obj_max_1m = new date_time(my_result($sel_max_1m, 0, 'Start_max'));
 
