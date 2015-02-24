@@ -38,13 +38,14 @@ while($num_hours_to_aggregate > 0) {
 	if($obj_max_10m->datetime == '0000-00-00 00:00:00')
 		$obj_max_10m = new date_time('2015-02-06 00:00:00');
 	
-	$obj_max_plus59 = $obj_max_10m->plus_mins(60);	# 1 more minute taken as the while needs to loop one more time for the insert to be triggered
+	$obj_max_plus60 = $obj_max_10m->plus_mins(60);	# 1 more minute taken as the while needs to loop one more time for the insert to be triggered
+	$obj_max_plus59 = $obj_max_10m->plus_mins(59);
 	# if there aren't more data on raw_data, exit the loop;
-	if($obj_max_1m->timestamp < $obj_max_plus59->timestap)
+	if($obj_max_1m->timestamp < $obj_max_plus60->timestap)
 		break;
 
 	# Select next hour from raw data
-	$sql = 'SELECT * FROM Raw_Data WHERE CC_Time BETWEEN \''. $obj_max_10m->datetime .'\' AND \''. $obj_max_plus59->datetime .'\' ORDER BY CC_Time ASC';
+	$sql = 'SELECT * FROM Raw_Data WHERE CC_Time BETWEEN \''. $obj_max_10m->datetime .'\' AND \''. $obj_max_plus60->datetime .'\' ORDER BY CC_Time ASC';
 	$sel_raw = my_query($sql, $conex);
 	
 	$arr_ins_10m = array();
@@ -75,8 +76,8 @@ while($num_hours_to_aggregate > 0) {
 			$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
 			$arr_ins_10m['Period_Description'][]	= $record['CC_Time'];
 			$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
-			$arr_ins_10m['Average_Watt_Weight'][]	= $count;
-			$arr_ins_10m['Average_Temp_Weight'][]	= $count;
+			$arr_ins_10m['Average_Watt_Weight'][]	= $count / 60;
+			$arr_ins_10m['Average_Temp_Weight'][]	= $count / 60;
 			# reset variables
 			$this_10m = $rec_10m;
 			$max_watt = -100000;
@@ -97,7 +98,47 @@ while($num_hours_to_aggregate > 0) {
 		$sum_temp+= $record['Temperature'];
 	}	//	while($record = my_fetch_array($sel_raw)) {
 	
-pa($arr_ins_10m);
+	# now calculate the 1 hour agg. all the others (day, week, month, year) are re-calculated every time based on the one hour
+	$arr_ins_1h = array();
+	$max_watt = -100000;
+	$min_watt = 100000;
+	$max_temp = -100;
+	$min_temp = 100;
+	$count = 0;
+	$sum_watt = 0;
+	$sum_temp = 0;
+
+	foreach($arr_ins_10m['Start_Datetime'] as $i => $rec) {
+		if($max_watt < $arr_ins_10m['Max_Wattage'][$i])		{	$max_watt = $arr_ins_10m['Max_Wattage'][$i];		$max_watt_time = $arr_ins_10m['Max_Watt_Datetime'][$i];	}
+		if($min_watt > $arr_ins_10m['Min_Wattage'][$i])		{	$min_watt = $arr_ins_10m['Min_Wattage'][$i];		$min_watt_time = $arr_ins_10m['Min_Watt_Datetime'][$i];	}
+		if($max_temp < $arr_ins_10m['Max_Temperature'][$i])	{	$max_temp = $arr_ins_10m['Max_Temperature'][$i];	$max_temp_time = $arr_ins_10m['Max_Temp_Datetime'][$i];	}
+		if($min_temp > $arr_ins_10m['Min_Temperature'][$i])	{	$min_temp = $arr_ins_10m['Min_Temperature'][$i];	$min_temp_time = $arr_ins_10m['Min_Temp_Datetime'][$i];	}
+		$count++;
+		$sum_watt+= $arr_ins_10m['Average_Wattage'][$i];
+		$sum_temp+= $arr_ins_10m['Average_Temperature'][$i];
+	}	//	foreach($arr_ins_10m['Start_Datetime'] as $i => $rec) {
+	
+	
+	$arr_ins_1h['Start_Datetime'][]			= $obj_max_10m->datetime;
+	$arr_ins_1h['End_Datetime'][]			= $obj_max_plus59->datetime;
+	$arr_ins_1h['Aggregate_Period_Type'][]	= 'hour';
+	$arr_ins_1h['Average_Wattage'][]		= $sum_watt / $count;
+	$arr_ins_1h['Average_Temperature'][]	= $sum_temp / $count;
+	$arr_ins_1h['Max_Wattage'][]			= $max_watt;
+	$arr_ins_1h['Min_Wattage'][]			= $min_watt;
+	$arr_ins_1h['Max_Temperature'][]		= $max_temp;
+	$arr_ins_1h['Min_Temperature'][]		= $min_temp;
+	$arr_ins_1h['Max_Watt_Datetime'][]		= $max_watt_time;
+	$arr_ins_1h['Min_Watt_Datetime'][]		= $min_watt_time;
+	$arr_ins_1h['Max_Temp_Datetime'][]		= $max_temp_time;
+	$arr_ins_1h['Min_Temp_Datetime'][]		= $min_temp_time;
+	$arr_ins_1h['Period_Description'][]		= $obj_max_10m->datetime;
+	$arr_ins_1h['Complete_Period_Ind'][]	= 'Y';
+	$arr_ins_1h['Average_Watt_Weight'][]	= 1;
+	$arr_ins_1h['Average_Temp_Weight'][]	= 1;
+	
+	pa($arr_ins_1h);
+	pa($arr_ins_10m);
 exit();	
 
 	# Select the next hour from the 1min aggregate table
