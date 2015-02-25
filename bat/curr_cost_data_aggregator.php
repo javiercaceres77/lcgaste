@@ -157,70 +157,18 @@ while($num_hours_to_aggregate > 0) {
 	$arr_ins_1h['Average_Watt_Weight']		= 1;
 	$arr_ins_1h['Average_Temp_Weight']		= 1;
 	
-	pa($arr_ins_1h);
-	pa($arr_ins_10m);
-exit();	
+	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
+	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
+	if($ok_ins_10m)
+		write_log_db('Current Cost', 'INSERT 10min AGG OK', $msg, 'current_cost_data_aggregator.php');
+	else
+		write_log_db('Current Cost', 'INSERT 10min AGG Error', $msg, 'current_cost_data_aggregator.php');
 
-	# Select the next hour from the 1min aggregate table
-	$sql = 'SELECT * FROM Raw_Data 
-	WHERE (CC_Time >= (
-		SELECT MAX(End_Datetime) AS MAX_END_DATETIME FROM Aggregate_Data WHERE Aggregate_Period_Type = \'10min\'
-	)
-	ORDER BY CC_Time ASC
-	LIMIT 0,59';
-
-}	//	while($num_hours_to_aggregate > 0) {
-
-
-exit();
-
-
-
-# ---------------------------------------------------------
-# calculate the 1min aggregates ---------------------------
-# ---------------------------------------------------------
-
-# Select the latest 1 hour aggregate
-//$sql = 'SELECT MAX(End_Datetime) AS Start_max FROM Aggregate_Data WHERE Aggregate_Period_Type = \'10min\'';
-//$sel_max_10m = my_query($sql, $conex);
-//$obj_max_10m = new date_time(my_result($sel_max_10m, 0, 'Start_max'));
-
-# Select the latest 1min aggregate
-//$sql = 'SELECT MAX( CC_Time ) as Start_max FROM Raw_Data';
-//$sel_max_1m = my_query($sql, $conex);
-//$obj_max_1m = new date_time(my_result($sel_max_1m, 0, 'Start_max'));
-
-
-
-
-# Select all 1min aggregates older than max_10
-$sql = 'SELECT * FROM Raw_Data WHERE CC_Time > \''. $obj_max_10m->datetime .'\' ORDER BY CC_Time ASC';
-$sel_raw = my_query($sql, $conex);
-
-$num_loops = $num_hours_to_aggregate * 60;
-while($record = my_fetch_array($sel_raw)) {
-	$num_loops--;
-	if($num_loops < 0) break;
-	
-	
-}
-
-
-while($num_hours_to_aggregate >= 0) {
-	$num_hours_to_aggregate--;
-	
-}
-
-
-if($ok_ins_reg)
-{	
-	$sql = 'DELETE FROM Raw_Data WHERE CC_Time BETWEEN \''. $start_time->datetime .'\' AND \''. $end_time->datetime .'\'';
-	// delete records from raw table? 
-	write_log_db('Current Cost', 'INSERT aggregate OK', $msg, 'current_cost_data_aggregator.php');
-}
-else {
-	write_log_db('Current Cost', 'INSERT aggregate ERROR', $msg, 'curr_cost_xml_processor.php');
-}
-
+	$ok_ins_1h = insert_array_db('Aggregate_Data', $arr_ins_1h);
+	$msg = 'Inserted 1 hour aggregate: '. $arr_ins_1h['Period_Description'];
+	if($ok_ins_1h)
+		write_log_db('Current Cost', 'INSERT hour AGG OK', $msg, 'current_cost_data_aggregator.php');
+	else
+		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
 
 ?>
