@@ -428,6 +428,7 @@ class my_date {
 }
 
 class date_time {
+	# Changed 25/02/2015 to make otime a proper object of my_time, not just a string.
 	public $datetime;
 	public $odate;
 	public $otime;
@@ -435,7 +436,6 @@ class date_time {
 	public $minute;
 	public $second;
 	public $timestamp;
-	
 	
 	public function __construct($vdate, $time = '00:00:00') {
 		if($vdate == 'now') {
@@ -453,10 +453,10 @@ class date_time {
 		$this->hour = $arr_time[0] ? add_zeroes($arr_time[0]) : '00';
 		$this->minute = $arr_time[1] ? add_zeroes($arr_time[1]) : '00';
 		$this->second = $arr_time[2] ? add_zeroes($arr_time[2]) : '00';
-		$this->otime = $this->hour .':'. $this->minute .':'. $this->second;
+		$this->otime = new my_time($this->hour .':'. $this->minute .':'. $this->second);
 		$this->timestamp = mktime($this->hour, $this->minute, $this->second, $this->odate->month, $this->odate->day, $this->odate->year);
 		
-		$this->datetime = $this->odate->odate .' '. $this->otime;
+		$this->datetime = $this->odate->odate .' '. $this->otime->time;
 	}
 	
 	public function plus_mins($mins) {
