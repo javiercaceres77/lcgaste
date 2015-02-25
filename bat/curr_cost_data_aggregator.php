@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 # Includes  ----------------------------------
 
 include '/var/www/lcgaste/inc/config_dom.php';
@@ -14,9 +15,6 @@ unset($_POST, $_GET);
 
 # some general use objects and variables ------------------
 $num_hours_to_aggregate = 12;
-//$now = new date_time('now');
-//$end_time = $now->plus_mins(-60);	#usually analyse only up until one hour ago
-//$max_analysis_days = 3;	 #maximum number of days that is analysed
 
 # SELECT 1 hour from the raw_data and calculate the 10min and 1h aggregates.
 # Just be careful that the raw_data table has at least 1 hour of data
@@ -170,5 +168,5 @@ while($num_hours_to_aggregate > 0) {
 		write_log_db('Current Cost', 'INSERT hour AGG OK', $msg, 'current_cost_data_aggregator.php');
 	else
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
-
+echo 'im all the way down';
 ?>
