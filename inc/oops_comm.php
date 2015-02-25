@@ -448,18 +448,25 @@ class date_time {
 		}
 		
 		$this->odate = new my_date($vdate);
+		$this->otime = new my_time($time);
+		
+		$this->hour = $this->otime->hour;
+		$this->minute = $this->otime->minute;
+		$this->second = $this->otime->second;
+		$this->timestamp = mktime($this->hour, $this->minute, $this->second, $this->odate->month, $this->odate->day, $this->odate->year);
 
-		$arr_time = explode(':', $time);
+		/*$arr_time = explode(':', $time);
 		$this->hour = $arr_time[0] ? add_zeroes($arr_time[0]) : '00';
 		$this->minute = $arr_time[1] ? add_zeroes($arr_time[1]) : '00';
 		$this->second = $arr_time[2] ? add_zeroes($arr_time[2]) : '00';
 		$this->otime = new my_time($this->hour .':'. $this->minute .':'. $this->second);
-		$this->timestamp = mktime($this->hour, $this->minute, $this->second, $this->odate->month, $this->odate->day, $this->odate->year);
+		*/
 		
 		$this->datetime = $this->odate->odate .' '. $this->otime->time;
 	}
 	
 	public function plus_mins($mins) {
+		//$new_otime = $this->otime->plus_mins($mins);
 		$new_timestamp = $this->timestamp + ($mins * 60);
 		$ret_date = date('Y-m-d', $new_timestamp);
 		$ret_time = date('H:i:s', $new_timestamp);
@@ -482,6 +489,10 @@ class my_time {
 	public $total_seconds;
 	
 	public function __construct($time) {
+		if($time == 'now') {
+			$time = date('H:i:s');
+		}
+		
 		if(strlen($time) == 8) {	# 00:00:00
 			$arr_time = explode(':', $time);
 			
