@@ -493,7 +493,7 @@ class my_time {
 			$time = date('H:i:s');
 		}
 		
-		if(strlen($time) == 8) {	# 00:00:00
+		if(strlen($time) >= 8) {	# 00:00:00 or 0000:00:00
 			$arr_time = explode(':', $time);
 			
 			$this->hour = $arr_time[0] ? add_zeroes($arr_time[0]) : '00';
