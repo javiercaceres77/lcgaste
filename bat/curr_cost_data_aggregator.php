@@ -34,8 +34,12 @@ while($num_hours_to_aggregate > 0) {
 
 	if($obj_max_10m->datetime == '0000-00-00 00:00:00')
 		$obj_max_10m = new date_time('2015-02-06 00:00:00');
-	
-	//$obj_max_plus60 = $obj_max_10m->plus_mins(60);	# 1 more minute taken as the while needs to loop one more time for the insert to be triggered
+		
+	#round the time to the next hour; $obj_max_10m is used as the start datetime to calculate the aggregates and we want it to be whole hours
+	#we do this by adding 59 minutes and truncating the minutes.
+	$aux_date_time = $obj_max_10m->plus_mins(59);
+	$obj_max_10m = new date_time($aux_date_time->odate->odate, $aux_date_time->hour .':00:00');
+		
 	$obj_max_plus59 = $obj_max_10m->plus_mins(59);
 	# if there aren't more data on raw_data, exit the loop;
 	if($obj_max_1m->timestamp < $obj_max_plus59->timestap)
