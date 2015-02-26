@@ -75,7 +75,7 @@ class my_date {
 		global $conf_default_lang;
 		
 		if($lan == '') {
-			if($_SESSION['misc']['lang'])
+			if(isset($_SESSION['misc']['lang']))
 				$this->language = $_SESSION['misc']['lang'];
 			else
 				$this->language = $conf_default_lang;
