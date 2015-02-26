@@ -484,7 +484,9 @@ class date_time {
 			break;
 			case 'week':
 				$weekday = $this->odate->get_weekday();
+				echo 'weekday: '. $weekday;
 				$sunday = $this->odate->plus_days(7 - $weekday);
+				pa($sunday);
 				return new date_time($sunday->odate->odate, '23:59:59');
 			break;
 			case 'month':
