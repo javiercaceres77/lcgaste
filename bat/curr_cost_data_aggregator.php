@@ -212,7 +212,7 @@ function add_aggregates($period_type) {
 	 return;
 	}	// else 	if($obj_max_10m->datetime == '0000-00-00 00:00:00')
 
-pa($obj_start_datetime, $period_type);
+pa($obj_end_datetime, $period_type);
 	
 }	//	function add_aggregates($period_type) {
 
