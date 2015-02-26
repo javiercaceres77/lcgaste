@@ -476,6 +476,28 @@ class date_time {
 	public function format_time() {
 		return $this->hour .':'. $this->minute;
 	}
+	
+	public function calculate_end_of_period($period_type) {
+		switch($period_type) {
+			case 'day':
+				return new date_time($this->odate->odate, '23:59:59');
+			break;
+			case 'week':
+				$weekday = $this->odate->get_weekday();
+				$sunday = $this->odate->plus_days(7 - $weekday);
+				return new date_time($sunday->odate->odate, '23:59:59');
+			break;
+			case 'month':
+				$str_date = date('Y-m-t', $this->timestamp);	# t returns the number of days in a month
+				return new date_time($str_date, '23:59:59');
+			break:
+			case 'year':
+				return new date_time($this->odate->year .'-12-31', '23:59:59');
+			break;
+			// add quarter, third, fortnight?
+		}
+	}
+
 }
 
 class my_time {
