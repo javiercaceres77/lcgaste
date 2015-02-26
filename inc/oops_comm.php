@@ -490,7 +490,7 @@ class date_time {
 			case 'month':
 				$str_date = date('Y-m-t', $this->timestamp);	# t returns the number of days in a month
 				return new date_time($str_date, '23:59:59');
-			break:
+			break;
 			case 'year':
 				return new date_time($this->odate->year .'-12-31', '23:59:59');
 			break;
