@@ -184,12 +184,15 @@ function add_aggregates($period_type) {
 	$sql = 'SELECT MAX(End_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'N\'';
 	$sel = my_query($sql, $conex);
 	$obj_start_datetime = new date_time($sel, 0, 'Max_Start_Datetime');
+	
+pa($obj_start_datetime, 'obj_start_datetime');
 
 	if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 		# There aren't any open periods; Select the latest one closedir
 		$sql = 'SELECT MAX(End_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'Y\'';
 		$sel = my_query($sql, $conex);
 		$obj_start_datetime = new date_time($sel, 0, 'Max_Start_Datetime');
+pa($obj_start_datetime, 'obj_start_datetime');
 
 		if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 			# There aren't periods at all; Select what's on the 1h aggregates.
@@ -200,6 +203,7 @@ function add_aggregates($period_type) {
 			//$obj_end_datetime = new date_time($sel, 0, 'Max_Start_Datetime');
 			# calculate the end of the period 
 			
+pa($obj_start_datetime, 'obj_start_datetime');
 		
 		}	//	2nd if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
 		
