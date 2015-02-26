@@ -183,38 +183,47 @@ add_aggregates('year');
 
 function add_aggregates($period_type) {
 	global $conex;
+	$exist_open_period = true;
 	# Select the latest open period
 	$sql = 'SELECT MAX(End_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'N\'';
 	$sel = my_query($sql, $conex);
 	$obj_start_datetime = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
-	
 
 	if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
-		# There aren't any open periods; Select the latest one closedir
+		# There aren't any open periods; Select the latest one closed
 		$sql = 'SELECT MAX(End_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'Y\'';
 		$sel = my_query($sql, $conex);
 		$obj_start_datetime = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
 
 		if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 			# There aren't periods at all; Select what's on the 1h aggregates.
-			//$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime, MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
 			$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
 			$sel = my_query($sql, $conex);
 			$obj_start_datetime = new date_time(my_result($sel, 0, 'Min_Start_Datetime'));
-			//$obj_end_datetime = new date_time($sel, 0, 'Max_Start_Datetime');
-			# calculate the end of the period 
-			$obj_end_datetime = $obj_start_datetime->calculate_end_of_period($period_type);
-		
 		}	//	2nd if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
-		
+		$exist_open_period = false;
 	}	//	1st if($obj_max_10m->datetime == '0000-00-00 00:00:00')
-	else {
-	 return;
-	}	// else 	if($obj_max_10m->datetime == '0000-00-00 00:00:00')
-
-pa($obj_end_datetime, $period_type);
+	# calculate the end of the period 
+	$obj_end_datetime = $obj_start_datetime->calculate_end_of_period($period_type);
+	# now calculate the aggregates using SQL. The max and min datetimes will be extracted later
+	$sql = 'SELECT AVG(Average_Wattage) AS Average_Wattage, 
+			MAX(Max_Wattage) AS Max_Wattage,
+			MIN(Min_Wattage) AS Min_Wattage,
+			AVG(Average_Temperature) AS Average_Temperature, 
+			MAX(Max_Temperature) AS Max_Temperature,
+			MIN(Min_Temperature) AS Min_Temperature,
+			COUNT(*) AS Weight
+			FROM Aggregate_Data
+			WHERE Aggregate_Period_Type = \'hour\'
+			AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\'
+			AND \''. $obj_end_datetime->datetime .'\'';
+	$sel = my_query($sql, $conex);
+	$arr_result = my_fetch_array($sel);
+	
+	pa($arr_result, $period_type);
 	
 }	//	function add_aggregates($period_type) {
+
 
 
 ?>
