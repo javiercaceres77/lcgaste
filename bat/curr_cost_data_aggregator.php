@@ -176,6 +176,9 @@ while($num_hours_to_aggregate > 0) {
 
 # Now start to calculate the day, week, month and year aggregates
 add_aggregates('day');
+add_aggregates('week');
+add_aggregates('month');
+add_aggregates('year');
 
 
 function add_aggregates($period_type) {
@@ -200,7 +203,7 @@ function add_aggregates($period_type) {
 			$obj_start_datetime = new date_time(my_result($sel, 0, 'Min_Start_Datetime'));
 			//$obj_end_datetime = new date_time($sel, 0, 'Max_Start_Datetime');
 			# calculate the end of the period 
-			
+			$obj_end_datetime = $obj_start_datetime->calculate_end_of_period($period_type);
 		
 		}	//	2nd if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
 		
@@ -209,8 +212,9 @@ function add_aggregates($period_type) {
 	 return;
 	}	// else 	if($obj_max_10m->datetime == '0000-00-00 00:00:00')
 
-pa($obj_start_datetime, '4');
+pa($obj_start_datetime, $period_type);
 	
 }	//	function add_aggregates($period_type) {
+
 
 ?>
