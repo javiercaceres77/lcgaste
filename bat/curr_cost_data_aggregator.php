@@ -42,7 +42,7 @@ while($num_hours_to_aggregate > 0) {
 
 	$obj_max_plus59 = $obj_max_10m->plus_mins(59);
 	# if there aren't more data on raw_data, exit the loop;
-	if($obj_max_1m->timestamp < $obj_max_plus59->timestap)
+	if($obj_max_1m->timestamp < $obj_max_plus59->timestamp)
 		break;
 
 	# Select next hour from raw data
@@ -185,13 +185,13 @@ function add_aggregates($period_type) {
 	$sel = my_query($sql, $conex);
 	$obj_start_datetime = new date_time($sel, 0, 'Max_Start_Datetime');
 
-	if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
+	if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 		# There aren't any open periods; Select the latest one closedir
 		$sql = 'SELECT MAX(End_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'Y\'';
 		$sel = my_query($sql, $conex);
 		$obj_start_datetime = new date_time($sel, 0, 'Max_Start_Datetime');
 
-		if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
+		if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 			# There aren't periods at all; Select what's on the 1h aggregates.
 			//$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime, MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
 			$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
