@@ -157,7 +157,7 @@ while($num_hours_to_aggregate > 0) {
 	$arr_ins_1h['Complete_Period_Ind']		= 'Y';
 	$arr_ins_1h['Average_Watt_Weight']		= 1;
 	$arr_ins_1h['Average_Temp_Weight']		= 1;
-
+/*
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
@@ -171,7 +171,7 @@ while($num_hours_to_aggregate > 0) {
 		write_log_db('Current Cost', 'INSERT hour AGG OK', $msg, 'current_cost_data_aggregator.php');
 	else
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
-
+*/
 }	//	while
 
 # Now start to calculate the day, week, month and year aggregates
@@ -185,7 +185,7 @@ function add_aggregates($period_type) {
 	global $conex;
 	$exist_open_period = true;
 	# Select the latest open period
-	$sql = 'SELECT MAX(End_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'N\'';
+	$sql = 'SELECT MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'N\'';
 	$sel = my_query($sql, $conex);
 	$obj_start_datetime = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
 
@@ -223,6 +223,9 @@ function add_aggregates($period_type) {
 	$sel = my_query($sql, $conex);
 	$arr_result = my_fetch_array($sel);
 	
+	$max_end_datetime = $arr_result['Max_End_Datetime'];	#	This can't be in this array so put it in variable
+	unset($arr_result['Max_End_Datetime']);
+	
 	# get the max and min datetimes
 	$sql = 'SELECT Max_Watt_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Max_Wattage = \''. $arr_result['Max_Wattage'] .'\' LIMIT 0,1';
 	$sel = my_query($sql, $conex);
@@ -245,9 +248,22 @@ function add_aggregates($period_type) {
 	$arr_result['End_Datetime']				= $obj_end_datetime->datetime;
 	$arr_result['Aggregate_Period_Type']	= $period_type;
 	$arr_result['Period_Description']		= $obj_start_datetime->datetime;	// create function to get description
-	$arr_result['Complete_Period_Ind']		= 'Y';			// to be defined
-
 	
+	# determine if the period is to be opened or closed:
+	if($arr_result['End_Datetime'] == $max_end_datetime)
+		$arr_result['Complete_Period_Ind']		= 'Y';
+	else
+		$arr_result['Complete_Period_Ind']		= 'N';
+	
+	if($exist_open_period) {
+		# update the existing period: the one that starts at the same time (and has the same period type)
+		echo ' update ';
+	}
+	else {
+		# insert the period
+		echo ' insert ';
+	}
+			
 // Check if the period should be closed (and if there is an open one that shouldn't be)
 pa($arr_result, $period_type);	
 	
