@@ -206,19 +206,23 @@ function add_aggregates($period_type) {
 	# calculate the end of the period 
 	$obj_end_datetime = $obj_start_datetime->calculate_end_of_period($period_type);
 	# now calculate the aggregates using SQL. The max and min datetimes will be extracted later
-	$sql = 'SELECT AVG(Average_Wattage) AS Average_Wattage, 
+	$sql = 'SELECT
+			MAX(End_Datetime) AS Max_End_Datetime,
+			AVG(Average_Wattage) AS Average_Wattage, 
 			MAX(Max_Wattage) AS Max_Wattage,
 			MIN(Min_Wattage) AS Min_Wattage,
 			AVG(Average_Temperature) AS Average_Temperature, 
 			MAX(Max_Temperature) AS Max_Temperature,
 			MIN(Min_Temperature) AS Min_Temperature,
-			COUNT(*) AS Weight
+			COUNT(*) AS Average_Watt_Weight,
+			COUNT(*) AS Average_Temp_Weight,
 			FROM Aggregate_Data
 			WHERE Aggregate_Period_Type = \'hour\'
 			AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\'
 			AND \''. $obj_end_datetime->datetime .'\'';
 	$sel = my_query($sql, $conex);
 	$arr_result = my_fetch_array($sel);
+	
 	# get the max and min datetimes
 	$sql = 'SELECT Max_Watt_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Max_Wattage = \''. $arr_result['Max_Wattage'] .'\' LIMIT 0,1';
 	$sel = my_query($sql, $conex);
@@ -236,8 +240,25 @@ function add_aggregates($period_type) {
 	$sel = my_query($sql, $conex);
 	$arr_result['Min_Temp_Datetime'] = my_result($sel, 0, 'Min_Temp_Datetime');
 	
-	pa($arr_result, $period_type);
+	# set some other variables;
+	$arr_result['Start_Datetime']			= $obj_start_datetime->datetime;
+	$arr_result['End_Datetime']				= $obj_end_datetime->datetime;
+	$arr_result['Aggregate_Period_Type']	= $period_type;
+	$arr_result['Period_Description']		= $obj_start_datetime->datetime;	// create function to get description
+	$arr_result['Complete_Period_Ind']		= 'Y';			// to be defined
+
 	
+// Check if the period should be closed (and if there is an open one that shouldn't be)
+pa($arr_result, $period_type);	
+	
+/*	
+	$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
+	$msg = 'Inserted '. $period_type .' aggregates: '. $arr_ins_10m['Period_Description'][1];
+	if($ok_ins_10m)
+		write_log_db('Current Cost', 'INSERT 10min AGG OK', $msg, 'current_cost_data_aggregator.php');
+	else
+		write_log_db('Current Cost', 'INSERT 10min AGG Error', $msg, 'current_cost_data_aggregator.php');
+*/	
 }	//	function add_aggregates($period_type) {
 
 ?>
