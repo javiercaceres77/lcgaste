@@ -415,8 +415,8 @@ function write_log($type, $message = '', $addfile = '') {
 function write_log_db($type, $subtype, $message, $script = '') {
 	$arr_ins = array('date_time' => date('Y-m-d H:i:s'),
 					 'ip' => $_SERVER['REMOTE_ADDR'],
-					 'user_id' => $_SESSION['login']['user_id'],
-					 'user_name' => $_SESSION['login']['email'],
+					 'user_id' => isset($_SESSION['login']['user_id']) ? $_SESSION['login']['user_id'] : '',
+					 'user_name' => isset($_SESSION['login']['email']) ? $_SESSION['login']['email'] : '',
 					 'message' => addslashes($message),
 					 'log_type' => $type,
 					 'log_subtype' => $subtype,
