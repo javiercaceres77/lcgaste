@@ -157,7 +157,7 @@ while($num_hours_to_aggregate > 0) {
 	$arr_ins_1h['Complete_Period_Ind']		= 'Y';
 	$arr_ins_1h['Average_Watt_Weight']		= 1;
 	$arr_ins_1h['Average_Temp_Weight']		= 1;
-/* commented during testing
+
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
@@ -171,7 +171,7 @@ while($num_hours_to_aggregate > 0) {
 		write_log_db('Current Cost', 'INSERT hour AGG OK', $msg, 'current_cost_data_aggregator.php');
 	else
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/
+
 }	//	while
 
 # Now start to calculate the day, week, month and year aggregates
