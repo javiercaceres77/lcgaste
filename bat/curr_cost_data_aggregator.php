@@ -176,9 +176,9 @@ while($num_hours_to_aggregate > 0) {
 
 # Now start to calculate the day, week, month and year aggregates
 add_aggregates('day');
-//add_aggregates('week');
-//add_aggregates('month');
-//add_aggregates('year');
+add_aggregates('week');
+add_aggregates('month');
+add_aggregates('year');
 
 
 function add_aggregates($period_type) {
@@ -221,15 +221,23 @@ function add_aggregates($period_type) {
 	$arr_result = my_fetch_array($sel);
 	# get the max and min datetimes
 	$sql = 'SELECT Max_Watt_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Max_Wattage = \''. $arr_result['Max_Wattage'] .'\' LIMIT 0,1';
-	echo $sql;
+	$sel = my_query($sql, $conex);
+	$arr_result['Max_Watt_Datetime'] = my_result($sel, 0, 'Max_Watt_Datetime');
+
 	$sql = 'SELECT Min_Watt_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Min_Wattage = \''. $arr_result['Min_Wattage'] .'\' LIMIT 0,1';
-	echo $sql;
+	$sel = my_query($sql, $conex);
+	$arr_result['Min_Watt_Datetime'] = my_result($sel, 0, 'Min_Watt_Datetime');
+
 	$sql = 'SELECT Max_Temp_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Max_Temperature = \''. $arr_result['Max_Temperature'] .'\' LIMIT 0,1';
-	echo $sql;
+	$sel = my_query($sql, $conex);
+	$arr_result['Max_Temp_Datetime'] = my_result($sel, 0, 'Max_Temp_Datetime');
+
 	$sql = 'SELECT Min_Temp_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Min_Temperature = \''. $arr_result['Min_Temperature'] .'\' LIMIT 0,1';
-	echo $sql;
+	$sel = my_query($sql, $conex);
+	$arr_result['Min_Temp_Datetime'] = my_result($sel, 0, 'Min_Temp_Datetime');
 	
 	pa($arr_result, $period_type);
 	
 }	//	function add_aggregates($period_type) {
+
 ?>
