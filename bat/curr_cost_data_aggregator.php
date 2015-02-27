@@ -204,7 +204,10 @@ function add_aggregates($period_type) {
 		$exist_open_period = false;
 	}	//	1st if($obj_max_10m->datetime == '0000-00-00 00:00:00')
 	# calculate the end of the period 
-	$obj_end_datetime = $obj_start_datetime->calculate_end_of_period($period_type);
+	$aux_date_time = $obj_start_datetime->calculate_end_of_period($period_type);
+	# calculate_end_of_period method returns seconds and we want it rounded to minutes:
+	$obj_end_datetime = new date_time($aux_date_time->odate->odate, $aux_date_time->hour .':'. $aux_date_time->minute .':00');
+	
 	# now calculate the aggregates using SQL. The max and min datetimes will be extracted later
 	$sql = 'SELECT
 			MAX(End_Datetime) AS Max_End_Datetime,
