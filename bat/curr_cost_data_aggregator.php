@@ -157,7 +157,7 @@ while($num_hours_to_aggregate > 0) {
 	$arr_ins_1h['Complete_Period_Ind']		= 'Y';
 	$arr_ins_1h['Average_Watt_Weight']		= 1;
 	$arr_ins_1h['Average_Temp_Weight']		= 1;
-/*
+
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
@@ -171,7 +171,7 @@ while($num_hours_to_aggregate > 0) {
 		write_log_db('Current Cost', 'INSERT hour AGG OK', $msg, 'current_cost_data_aggregator.php');
 	else
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/
+
 }	//	while
 
 # Now start to calculate the day, week, month and year aggregates
@@ -179,7 +179,6 @@ add_aggregates('day');
 add_aggregates('week');
 add_aggregates('month');
 add_aggregates('year');
-
 
 function add_aggregates($period_type) {
 	global $conex;
@@ -203,18 +202,18 @@ function add_aggregates($period_type) {
 		}	//	2nd if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
 		$exist_open_period = false;
 	}	//	1st if($obj_max_10m->datetime == '0000-00-00 00:00:00')
-	# calculate the end of the period 
+	# calculate the end of the period
 	$aux_date_time = $obj_start_datetime->calculate_end_of_period($period_type);
 	# calculate_end_of_period method returns seconds and we want it rounded to minutes:
 	$obj_end_datetime = new date_time($aux_date_time->odate->odate, $aux_date_time->hour .':'. $aux_date_time->minute .':00');
-	
+
 	# now calculate the aggregates using SQL. The max and min datetimes will be extracted later
 	$sql = 'SELECT
 			MAX(End_Datetime) AS Max_End_Datetime,
-			AVG(Average_Wattage) AS Average_Wattage, 
+			AVG(Average_Wattage) AS Average_Wattage,
 			MAX(Max_Wattage) AS Max_Wattage,
 			MIN(Min_Wattage) AS Min_Wattage,
-			AVG(Average_Temperature) AS Average_Temperature, 
+			AVG(Average_Temperature) AS Average_Temperature,
 			MAX(Max_Temperature) AS Max_Temperature,
 			MIN(Min_Temperature) AS Min_Temperature,
 			COUNT(*) AS Average_Watt_Weight,
@@ -225,10 +224,10 @@ function add_aggregates($period_type) {
 			AND \''. $obj_end_datetime->datetime .'\'';
 	$sel = my_query($sql, $conex);
 	$arr_result = my_fetch_array($sel);
-	
+
 	$max_end_datetime = $arr_result['Max_End_Datetime'];	#	This can't be in this array so put it in variable
 	unset($arr_result['Max_End_Datetime']);
-	
+
 	# get the max and min datetimes
 	$sql = 'SELECT Max_Watt_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Max_Wattage = \''. $arr_result['Max_Wattage'] .'\' LIMIT 0,1';
 	$sel = my_query($sql, $conex);
@@ -245,39 +244,42 @@ function add_aggregates($period_type) {
 	$sql = 'SELECT Min_Temp_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $obj_end_datetime->datetime .'\' AND Min_Temperature = \''. $arr_result['Min_Temperature'] .'\' LIMIT 0,1';
 	$sel = my_query($sql, $conex);
 	$arr_result['Min_Temp_Datetime'] = my_result($sel, 0, 'Min_Temp_Datetime');
-	
+
 	# set some other variables;
 	$arr_result['Start_Datetime']			= $obj_start_datetime->datetime;
 	$arr_result['End_Datetime']				= $obj_end_datetime->datetime;
 	$arr_result['Aggregate_Period_Type']	= $period_type;
 	$arr_result['Period_Description']		= $obj_start_datetime->datetime;	// create function to get description
-	
+
 	# determine if the period is to be opened or closed:
 	if($arr_result['End_Datetime'] == $max_end_datetime)
 		$arr_result['Complete_Period_Ind']		= 'Y';
 	else
 		$arr_result['Complete_Period_Ind']		= 'N';
-	
+
 	if($exist_open_period) {
 		# update the existing period: the one that starts at the same time (and has the same period type)
-		echo ' update ';
+		$keys = array('Start_Datetime','Aggregate_Period_Type');
+		$values = array($arr_result['Start_Datetime'], $period_type);
+		# we don't want to update these:
+		unset($arr_result['Start_Datetime'], $arr_result['Aggregate_Period_Type'], $arr_result['End_Datetime']);
+
+		$ok_upd = update_array_db('Aggregate_Data', $keys, $values, $arr_result);
+		$msg = 'Updated '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
+		if($ok_upd)
+			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
+		else
+			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
 	}
 	else {
 		# insert the period
-		echo ' insert ';
+		$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
+		$msg = 'Inserted '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
+		if($ok_ins)
+			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
+		else
+			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
 	}
-			
-// Check if the period should be closed (and if there is an open one that shouldn't be)
-pa($arr_result, $period_type);	
-	
-/*	
-	$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
-	$msg = 'Inserted '. $period_type .' aggregates: '. $arr_ins_10m['Period_Description'][1];
-	if($ok_ins_10m)
-		write_log_db('Current Cost', 'INSERT 10min AGG OK', $msg, 'current_cost_data_aggregator.php');
-	else
-		write_log_db('Current Cost', 'INSERT 10min AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/	
 }	//	function add_aggregates($period_type) {
 
 ?>
