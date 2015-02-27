@@ -215,7 +215,7 @@ function add_aggregates($period_type) {
 			MAX(Max_Temperature) AS Max_Temperature,
 			MIN(Min_Temperature) AS Min_Temperature,
 			COUNT(*) AS Average_Watt_Weight,
-			COUNT(*) AS Average_Temp_Weight,
+			COUNT(*) AS Average_Temp_Weight
 			FROM Aggregate_Data
 			WHERE Aggregate_Period_Type = \'hour\'
 			AND Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\'
