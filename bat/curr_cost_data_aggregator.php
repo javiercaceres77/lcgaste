@@ -279,11 +279,11 @@ pa($arr_result, 'UPD '. $period_type);
 	}
 	else {
 		# insert the period
-
-		$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
-		$msg = 'Inserted '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
 pa($arr_result, 'INS '. $period_type);
-/*		if($ok_ins)
+/*		$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
+		$msg = 'Inserted '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
+
+		if($ok_ins)
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
 		else
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
