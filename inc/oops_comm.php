@@ -274,7 +274,8 @@ class my_date {
 		$ret_mk = mktime(0, 0, 0, $this->month, $this->day + $days, $this->year);
 		return new my_date(date('Y-m-d', $ret_mk));
 	}
-
+/*
+this function to be substituted by plus_period in the date_time class and not make use of the date dimension
 	public function plus_cycle($cycles, $type) {
 		# types: mth - monthly; qtr - quarterly (3 mth); 4mt - 4 monthly; yrl - yearly
 		global $conex;
@@ -304,7 +305,7 @@ class my_date {
 		}
 		
 	}
-
+*/
 	public function format_date($format = '') {
 		# $format: '' -> 15-06-2006; 
 			# med -> 15-jul-2006; 
@@ -466,11 +467,30 @@ class date_time {
 	}
 	
 	public function plus_mins($mins) {
-		//$new_otime = $this->otime->plus_mins($mins);
 		$new_timestamp = $this->timestamp + ($mins * 60);
 		$ret_date = date('Y-m-d', $new_timestamp);
 		$ret_time = date('H:i:s', $new_timestamp);
 		return new date_time($ret_date, $ret_time);
+	}
+	
+	public function plus_period($period_type, $number) {
+		# accepted: day, week, month, year
+		# tbd: quarter, fortnight, 4month ...
+		switch($period_type) {
+			case 'day':
+				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month, $this->day + $number, $this->year);
+			break;
+			case 'week':
+				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month, $this->day + ($number * 7), $this->year);
+			break;
+			case 'month':
+				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month + $number, $this->day, $this->year);			
+			break;
+			case 'year':
+				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month, $this->day, $this->year + $number);			
+			break;
+		}
+		return new date_time(date('Y-m-d H:i:s', $ret_mk));
 	}
 	
 	public function format_time() {
@@ -497,7 +517,6 @@ class date_time {
 			// add quarter, third, fortnight?
 		}
 	}
-
 }
 
 class my_time {
