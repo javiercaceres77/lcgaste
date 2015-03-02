@@ -158,7 +158,7 @@ while($num_hours_to_aggregate > 0) {
 	$arr_ins_1h['Average_Watt_Weight']		= 1;
 	$arr_ins_1h['Average_Temp_Weight']		= 1;
 
-/*	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
+	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
 		write_log_db('Current Cost', 'INSERT 10min AGG OK', $msg, 'current_cost_data_aggregator.php');
@@ -171,7 +171,7 @@ while($num_hours_to_aggregate > 0) {
 		write_log_db('Current Cost', 'INSERT hour AGG OK', $msg, 'current_cost_data_aggregator.php');
 	else
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/
+
 }	//	while
 echo 'imhere! ';
 # Now start to calculate the day, week, month and year aggregates
@@ -264,26 +264,25 @@ function add_aggregates($period_type) {
 		$values = array($arr_result['Start_Datetime'], $period_type);
 		# we don't want to update these:
 		unset($arr_result['Start_Datetime'], $arr_result['Aggregate_Period_Type'], $arr_result['End_Datetime']);
-pa($arr_result, 'update arr-res');
-/*		$ok_upd = update_array_db('Aggregate_Data', $keys, $values, $arr_result);
+
+		$ok_upd = update_array_db('Aggregate_Data', $keys, $values, $arr_result);
 		$msg = 'Updated '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
 		if($ok_upd)
 			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
 		else
 			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/			
+			
 	}
 	else {
 		# insert the period
-pa($arr_result, 'insert arr-res');
-/*
+
 		$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
 		$msg = 'Inserted '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
 		if($ok_ins)
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
 		else
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/
+
 	}
 }	//	function add_aggregates($period_type) {
 
