@@ -478,24 +478,21 @@ class date_time {
 		# tbd: quarter, fortnight, 4month ...
 		switch($period_type) {
 			case 'day':
-				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month, $this->day + $number, $this->year);
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->odate->month, $this->odate->day + $number, $this->odate->year);
 			break;
 			case 'week':
-				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month, $this->day + ($number * 7), $this->year);
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->odate->month, $this->odate->day + ($number * 7), $this->odate->year);
 			break;
 			case 'month':
-				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month + $number, $this->day, $this->year);			
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->odate->month + $number, $this->odate->day, $this->odate->year);			
 			break;
 			case 'year':
-				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year + $number);			
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->odate->month, $this->odate->day, $this->odate->year + $number);			
 			break;
 		}
 		return new date_time(date('Y-m-d H:i:s', $ret_mk));
 	}
-	
-	public function format_time() {
-		return $this->hour .':'. $this->minute;
-	}
+
 	
 	public function calculate_end_of_period($period_type) {
 		switch($period_type) {
