@@ -514,6 +514,27 @@ class date_time {
 			// add quarter, third, fortnight?
 		}
 	}
+	
+	public function calculate_start_of_period($period_type) {
+		switch($period_type) {
+			case 'day':
+				return new date_time($this->odate->odate, '00:00:00');
+			break;
+			case 'week':
+				$weekday = $this->odate->get_weekday();
+				$monday = $this->odate->plus_days(-$weekday + 1);	# note that plus_days returns a "my_date" object, not a "date_time" object
+				return new date_time($monday->odate, '00:00:00');
+			break;
+			case 'month':
+				
+				return new date_time($this->odate->year .'-'. $this->odate->month .'-01', '00:00:00');
+			break;
+			case 'year':
+				return new date_time($this->odate->year .'-01-01', '00:00:00');
+			break;
+			// add quarter, third, fortnight?
+		}
+	}
 }
 
 class my_time {
