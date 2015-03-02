@@ -173,7 +173,7 @@ while($num_hours_to_aggregate > 0) {
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
 
 }	//	while
-echo 'imhere! ';
+
 # Now start to calculate the day, week, month and year aggregates
 add_aggregates('day');
 add_aggregates('week');
