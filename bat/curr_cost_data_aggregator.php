@@ -194,10 +194,12 @@ echo 'sql1: '. $sql;
 		$sql = 'SELECT MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'Y\'';
 echo 'sql2: '. $sql;
 		$sel = my_query($sql, $conex);
-		$aux_date_time = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
-		$obj_start_datetime = $aux_date_time->plus_period($period_type, 1);
-
-		if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
+		if(my_num_rows($sel)) {
+			$aux_date_time = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
+			$obj_start_datetime = $aux_date_time->plus_period($period_type, 1);
+		}
+		else {
+		//if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 			# There aren't periods at all; Select what's on the 1h aggregates.
 			$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
 echo 'sql3: '. $sql;
