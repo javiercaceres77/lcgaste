@@ -194,8 +194,8 @@ echo 'sql1: '. $sql;
 		$sql = 'SELECT MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'Y\'';
 echo 'sql2: '. $sql;
 		$sel = my_query($sql, $conex);
-		if(my_num_rows($sel)) {
-			$aux_date_time = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
+		$aux_date_time = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
+		if($aux_date_time->datetime != '0000-00-00 00:00:00') {
 			$obj_start_datetime = $aux_date_time->plus_period($period_type, 1);
 		}
 		else {
@@ -208,6 +208,7 @@ echo 'sql3: '. $sql;
 		}	//	2nd if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
 		$exist_open_period = false;
 	}	//	1st if($obj_max_10m->datetime == '0000-00-00 00:00:00')
+
 	# calculate the end of the period
 	$aux_date_time = $obj_start_datetime->calculate_end_of_period($period_type);
 	# calculate_end_of_period method returns seconds and we want it rounded to minutes:
