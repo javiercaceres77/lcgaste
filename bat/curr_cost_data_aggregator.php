@@ -196,7 +196,8 @@ function add_aggregates($period_type) {
 		$sel = my_query($sql, $conex);
 		$aux_date_time = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
 		if($aux_date_time->datetime != '0000-00-00 00:00:00') {
-			$obj_start_datetime = $aux_date_time->plus_period($period_type, 1);
+			$aux_start = $aux_date_time->calculate_start_of_period($period_type);
+			$obj_start_datetime = $aux_start->plus_period($period_type, 1);
 		}
 		else {
 		//if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
