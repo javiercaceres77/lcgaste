@@ -185,12 +185,14 @@ function add_aggregates($period_type) {
 	$exist_open_period = true;
 	# Select the latest open period
 	$sql = 'SELECT MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'N\'';
+echo 'sql1: '. $sql;
 	$sel = my_query($sql, $conex);
 	$obj_start_datetime = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
 
 	if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 		# There aren't any open periods; Select the latest one closed
 		$sql = 'SELECT MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'Y\'';
+echo 'sql2: '. $sql;
 		$sel = my_query($sql, $conex);
 		$aux_date_time = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
 		$obj_start_datetime = $aux_date_time->plus_period($period_type, 1);
@@ -198,6 +200,7 @@ function add_aggregates($period_type) {
 		if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 			# There aren't periods at all; Select what's on the 1h aggregates.
 			$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
+echo 'sql3: '. $sql;
 			$sel = my_query($sql, $conex);
 			$obj_start_datetime = new date_time(my_result($sel, 0, 'Min_Start_Datetime'));
 		}	//	2nd if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
