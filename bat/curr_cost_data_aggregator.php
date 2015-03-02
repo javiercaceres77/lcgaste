@@ -185,14 +185,14 @@ function add_aggregates($period_type) {
 	$exist_open_period = true;
 	# Select the latest open period
 	$sql = 'SELECT MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'N\'';
-echo 'sql1: '. $sql;
+//echo 'sql1: '. $sql;
 	$sel = my_query($sql, $conex);
 	$obj_start_datetime = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
 
 	if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 		# There aren't any open periods; Select the latest one closed
 		$sql = 'SELECT MAX(Start_Datetime) AS Max_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \''. $period_type .'\' AND Complete_Period_Ind = \'Y\'';
-echo 'sql2: '. $sql;
+//echo 'sql2: '. $sql;
 		$sel = my_query($sql, $conex);
 		$aux_date_time = new date_time(my_result($sel, 0, 'Max_Start_Datetime'));
 		if($aux_date_time->datetime != '0000-00-00 00:00:00') {
@@ -202,7 +202,7 @@ echo 'sql2: '. $sql;
 		//if($obj_start_datetime->datetime == '0000-00-00 00:00:00') {
 			# There aren't periods at all; Select what's on the 1h aggregates.
 			$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
-echo 'sql3: '. $sql;
+//echo 'sql3: '. $sql;
 			$sel = my_query($sql, $conex);
 			$obj_start_datetime = new date_time(my_result($sel, 0, 'Min_Start_Datetime'));
 		}	//	2nd if($obj_max_10m->datetime == '0000-00-00 00:00:00') {
@@ -272,25 +272,25 @@ echo $sql;
 		# we don't want to update these:
 		unset($arr_result['Start_Datetime'], $arr_result['Aggregate_Period_Type'], $arr_result['End_Datetime']);
 pa($arr_result, 'UPD '. $period_type);
-/*		$ok_upd = update_array_db('Aggregate_Data', $keys, $values, $arr_result);
+		$ok_upd = update_array_db('Aggregate_Data', $keys, $values, $arr_result);
 		$msg = 'Updated '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
 		if($ok_upd)
 			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
 		else
 			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/			
+			
 	}
 	else {
 		# insert the period
 pa($arr_result, 'INS '. $period_type);
-/*		$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
+		$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
 		$msg = 'Inserted '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
 
 		if($ok_ins)
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
 		else
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
-*/
+
 	}
 }	//	function add_aggregates($period_type) {
 
