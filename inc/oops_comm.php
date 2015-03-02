@@ -478,16 +478,16 @@ class date_time {
 		# tbd: quarter, fortnight, 4month ...
 		switch($period_type) {
 			case 'day':
-				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month, $this->day + $number, $this->year);
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month, $this->day + $number, $this->year);
 			break;
 			case 'week':
-				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month, $this->day + ($number * 7), $this->year);
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month, $this->day + ($number * 7), $this->year);
 			break;
 			case 'month':
-				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month + $number, $this->day, $this->year);			
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month + $number, $this->day, $this->year);			
 			break;
 			case 'year':
-				$ret_mk = mktime($this->hour, $this-minute, $this->second, $this->month, $this->day, $this->year + $number);			
+				$ret_mk = mktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year + $number);			
 			break;
 		}
 		return new date_time(date('Y-m-d H:i:s', $ret_mk));
