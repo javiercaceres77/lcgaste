@@ -1,6 +1,7 @@
 <?php
 # Includes  ----------------------------------
-
+echo 'cagonlaputa';
+/*
 include '/var/www/lcgaste/inc/config_dom.php';
 include $conf_include_path . 'comm.php';
 include $conf_include_path . 'connect.php';
@@ -26,7 +27,7 @@ $obj_max_1m = new date_time(my_result($sel_max_1m, 0, 'Start_max'));
 
 pa($obj_max_1m, 'obj_max_1m');
 exit();
-/*
+
 while($num_hours_to_aggregate > 0) {
 	$num_hours_to_aggregate--;
 
