@@ -26,7 +26,7 @@ $obj_max_1m = new date_time(my_result($sel_max_1m, 0, 'Start_max'));
 
 pa($obj_max_1m, 'obj_max_1m');
 exit();
-
+/*
 while($num_hours_to_aggregate > 0) {
 	$num_hours_to_aggregate--;
 
@@ -57,7 +57,7 @@ echo 'sql: '. $sql;
 pa($sel_raw .'selraw')
 //echo 'num_rows: '. my_num_rows($sel_raw);
 	# if nothing is selected means that we need to jump to the next raw_data
-/*	if(my_num_rows($sel_raw) == 0) {
+	if(my_num_rows($sel_raw) == 0) {
 		$sql = 'SELECT MIN(CC_Time) AS Start_max FROM Raw_Data WHERE CC_Time > \''. $obj_max_plus59->datetime .'\'';
 echo $sql;
 		$sel_max_10m = my_query($sql, $conex);
@@ -70,7 +70,7 @@ echo $sql;
 		$sel_raw = my_query($sql, $conex);
 	}
 	
-*/	
+	
 	$arr_ins_10m = array();
 	$this_10m = substr($obj_max_10m->minute,0,1);
 	$max_watt = -100000;
@@ -312,5 +312,5 @@ function add_aggregates($period_type) {
 
 	}
 }	//	function add_aggregates($period_type) {
-
+*/
 ?>
