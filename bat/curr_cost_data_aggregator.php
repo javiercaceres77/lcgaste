@@ -156,6 +156,9 @@ while($num_hours_to_aggregate > 0) {
 		$sum_temp+= $arr_ins_10m['Average_Temperature'][$i];
 	}	//	foreach($arr_ins_10m['Start_Datetime'] as $i => $rec) {
 
+	# Floor the start time to the beginning of the hour.
+	$obj_max_10m = new date_time($obj_max_10m->odate->odate, $obj_max_10m->hour .':00:00');
+	
 	if($min_temp != 100) {
 		$arr_ins_1h['Start_Datetime']			= $obj_max_10m->datetime;
 		$arr_ins_1h['End_Datetime']				= $obj_max_plus59->datetime;
