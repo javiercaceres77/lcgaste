@@ -42,6 +42,8 @@ while($num_hours_to_aggregate > 0) {
 
 	$obj_max_plus59 = $obj_max_10m->plus_mins(59);
 	# if there aren't more data on raw_data, exit the loop;
+pa($obj_max_1m, 'obj_max_1m');
+pa($obj_max_plus59, 'obj_max_plus59');
 	if($obj_max_1m->timestamp < $obj_max_plus59->timestamp)
 		break;
 
