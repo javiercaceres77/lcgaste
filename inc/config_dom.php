@@ -10,7 +10,7 @@ $conf_logs_path = '/var/www/lcgaste/logs/';
 $conf_mods_path = 'mod/';
 $conf_default_mod = 'home';
 
-/# SETTINGS
+# SETTINGS
 $conf_db_host = '127.0.0.1';
 $conf_db_type = 'mysql';
 $conf_db_name = 'Domotics';
