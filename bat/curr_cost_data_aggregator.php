@@ -100,25 +100,27 @@ while($num_hours_to_aggregate > 0) {
 		$sum_temp+= $record['Temperature'];
 	}	//	while($record = my_fetch_array($sel_raw)) {
 
-	#INSERT again because the while loop exits before the last element is inserted
-	$arr_ins_10m['Start_Datetime'][]		= substr($this_time,0,14) . $this_10m .'0:00';
-	$arr_ins_10m['End_Datetime'][]			= substr($this_time,0,14) . $this_10m .'9:00';
-	$arr_ins_10m['Aggregate_Period_Type'][]	= '10min';
-	$arr_ins_10m['Average_Wattage'][]		= $sum_watt / $count;
-	$arr_ins_10m['Average_Temperature'][]	= $sum_temp / $count;
-	$arr_ins_10m['Max_Wattage'][]			= $max_watt;
-	$arr_ins_10m['Min_Wattage'][]			= $min_watt;
-	$arr_ins_10m['Max_Temperature'][]		= $max_temp;
-	$arr_ins_10m['Min_Temperature'][]		= $min_temp;
-	$arr_ins_10m['Max_Watt_Datetime'][]		= $max_watt_time;
-	$arr_ins_10m['Min_Watt_Datetime'][]		= $min_watt_time;
-	$arr_ins_10m['Max_Temp_Datetime'][]		= $max_temp_time;
-	$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
-	$arr_ins_10m['Period_Description'][]	= $this_time;
-	$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
-	$arr_ins_10m['Average_Watt_Weight'][]	= $count / 60;
-	$arr_ins_10m['Average_Temp_Weight'][]	= $count / 60;
-
+	if($count) {
+		#INSERT again because the while loop exits before the last element is inserted
+		$arr_ins_10m['Start_Datetime'][]		= substr($this_time,0,14) . $this_10m .'0:00';
+		$arr_ins_10m['End_Datetime'][]			= substr($this_time,0,14) . $this_10m .'9:00';
+		$arr_ins_10m['Aggregate_Period_Type'][]	= '10min';
+		$arr_ins_10m['Average_Wattage'][]		= $sum_watt / $count;
+		$arr_ins_10m['Average_Temperature'][]	= $sum_temp / $count;
+		$arr_ins_10m['Max_Wattage'][]			= $max_watt;
+		$arr_ins_10m['Min_Wattage'][]			= $min_watt;
+		$arr_ins_10m['Max_Temperature'][]		= $max_temp;
+		$arr_ins_10m['Min_Temperature'][]		= $min_temp;
+		$arr_ins_10m['Max_Watt_Datetime'][]		= $max_watt_time;
+		$arr_ins_10m['Min_Watt_Datetime'][]		= $min_watt_time;
+		$arr_ins_10m['Max_Temp_Datetime'][]		= $max_temp_time;
+		$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
+		$arr_ins_10m['Period_Description'][]	= $this_time;
+		$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
+		$arr_ins_10m['Average_Watt_Weight'][]	= $count / 60;
+		$arr_ins_10m['Average_Temp_Weight'][]	= $count / 60;
+	}
+	
 	# now calculate the 1 hour agg. all the others (day, week, month, year) are re-calculated every time based on the one hour
 	$arr_ins_1h = array();
 	$max_watt = -100000;
@@ -139,25 +141,26 @@ while($num_hours_to_aggregate > 0) {
 		$sum_temp+= $arr_ins_10m['Average_Temperature'][$i];
 	}	//	foreach($arr_ins_10m['Start_Datetime'] as $i => $rec) {
 
-
-	$arr_ins_1h['Start_Datetime']			= $obj_max_10m->datetime;
-	$arr_ins_1h['End_Datetime']				= $obj_max_plus59->datetime;
-	$arr_ins_1h['Aggregate_Period_Type']	= 'hour';
-	$arr_ins_1h['Average_Wattage']			= $sum_watt / $count;
-	$arr_ins_1h['Average_Temperature']		= $sum_temp / $count;
-	$arr_ins_1h['Max_Wattage']				= $max_watt;
-	$arr_ins_1h['Min_Wattage']				= $min_watt;
-	$arr_ins_1h['Max_Temperature']			= $max_temp;
-	$arr_ins_1h['Min_Temperature']			= $min_temp;
-	$arr_ins_1h['Max_Watt_Datetime']		= $max_watt_time;
-	$arr_ins_1h['Min_Watt_Datetime']		= $min_watt_time;
-	$arr_ins_1h['Max_Temp_Datetime']		= $max_temp_time;
-	$arr_ins_1h['Min_Temp_Datetime']		= $min_temp_time;
-	$arr_ins_1h['Period_Description']		= $obj_max_10m->datetime;
-	$arr_ins_1h['Complete_Period_Ind']		= 'Y';
-	$arr_ins_1h['Average_Watt_Weight']		= 1;
-	$arr_ins_1h['Average_Temp_Weight']		= 1;
-
+	if($count) {
+		$arr_ins_1h['Start_Datetime']			= $obj_max_10m->datetime;
+		$arr_ins_1h['End_Datetime']				= $obj_max_plus59->datetime;
+		$arr_ins_1h['Aggregate_Period_Type']	= 'hour';
+		$arr_ins_1h['Average_Wattage']			= $sum_watt / $count;
+		$arr_ins_1h['Average_Temperature']		= $sum_temp / $count;
+		$arr_ins_1h['Max_Wattage']				= $max_watt;
+		$arr_ins_1h['Min_Wattage']				= $min_watt;
+		$arr_ins_1h['Max_Temperature']			= $max_temp;
+		$arr_ins_1h['Min_Temperature']			= $min_temp;
+		$arr_ins_1h['Max_Watt_Datetime']		= $max_watt_time;
+		$arr_ins_1h['Min_Watt_Datetime']		= $min_watt_time;
+		$arr_ins_1h['Max_Temp_Datetime']		= $max_temp_time;
+		$arr_ins_1h['Min_Temp_Datetime']		= $min_temp_time;
+		$arr_ins_1h['Period_Description']		= $obj_max_10m->datetime;
+		$arr_ins_1h['Complete_Period_Ind']		= 'Y';
+		$arr_ins_1h['Average_Watt_Weight']		= 1;
+		$arr_ins_1h['Average_Temp_Weight']		= 1;
+	}
+	
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
@@ -267,7 +270,6 @@ function add_aggregates($period_type) {
 		$values = array($arr_result['Start_Datetime'], $period_type);
 		# we don't want to update these:
 		unset($arr_result['Start_Datetime'], $arr_result['Aggregate_Period_Type'], $arr_result['End_Datetime']);
-//pa($arr_result, 'UPD '. $period_type);
 		$ok_upd = update_array_db('Aggregate_Data', $keys, $values, $arr_result);
 		$msg = 'Updated '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
 		if($ok_upd)
@@ -278,7 +280,6 @@ function add_aggregates($period_type) {
 	}
 	else {
 		# insert the period
-//pa($arr_result, 'INS '. $period_type);
 		$ok_ins = insert_array_db('Aggregate_Data', $arr_result);
 		$msg = 'Inserted '. $period_type .'. Starting: '. $obj_start_datetime->datetime;
 
