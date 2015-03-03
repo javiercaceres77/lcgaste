@@ -54,8 +54,9 @@ while($num_hours_to_aggregate > 0) {
 	if(my_num_rows($sel_raw) == 0) {
 		$sql = 'SELECT MIN(CC_Time) AS Start_max FROM Raw_Data WHERE CC_Time > \''. $obj_max_plus59->datetime .'\'';
 		$sel_max_10m = my_query($sql, $conex);
-		$aux_date_time = new date_time(my_result($sel_max_10m, 0, 'Start_max'));
-		$obj_max_10m = new date_time($aux_date_time->odate->odate, $aux_date_time->hour .':00:00');
+		//$aux_date_time = new date_time(my_result($sel_max_10m, 0, 'Start_max'));
+		//$obj_max_10m = new date_time($aux_date_time->odate->odate, $aux_date_time->hour .':00:00');
+		$obj_max_10m = new date_time(my_result($sel_max_10m, 0, 'Start_max'));
 		$obj_max_plus59 = $obj_max_10m->plus_mins(59);
 		
 		# and select again the data
