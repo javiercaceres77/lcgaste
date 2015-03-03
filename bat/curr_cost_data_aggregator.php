@@ -309,5 +309,5 @@ function add_aggregates($period_type) {
 
 	}
 }	//	function add_aggregates($period_type) {
-*/
+
 ?>
