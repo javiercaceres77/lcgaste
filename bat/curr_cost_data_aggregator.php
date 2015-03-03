@@ -76,7 +76,7 @@ while($num_hours_to_aggregate > 0) {
 	while($record = my_fetch_array($sel_raw)) {
 		$this_time = $record['CC_Time'];
 		$rec_10m = substr($this_time,14,1);
-		if($rec_10m != $this_10m) {
+		if($rec_10m != $this_10m && $count) {
 			$arr_ins_10m['Start_Datetime'][]		= substr($this_time,0,14) . $this_10m .'0:00';
 			$arr_ins_10m['End_Datetime'][]			= substr($this_time,0,14) . $this_10m .'9:00';
 			$arr_ins_10m['Aggregate_Period_Type'][]	= '10min';
