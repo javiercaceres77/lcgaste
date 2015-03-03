@@ -62,7 +62,7 @@ while($num_hours_to_aggregate > 0) {
 		$sql = 'SELECT * FROM Raw_Data WHERE CC_Time BETWEEN \''. $obj_max_10m->datetime .'\' AND \''. $obj_max_plus59->datetime .'\' ORDER BY CC_Time ASC';
 		$sel_raw = my_query($sql, $conex);
 	}
-
+	
 	$arr_ins_10m = array();
 	$this_10m = substr($obj_max_10m->minute,0,1);
 	$max_watt = -100000;
@@ -114,7 +114,7 @@ while($num_hours_to_aggregate > 0) {
 		$sum_temp+= $record['Temperature'];
 	}	//	while($record = my_fetch_array($sel_raw)) {
 
-	if($count) {
+	if($min_temp != 100) {
 		#INSERT again because the while loop exits before the last element is inserted
 		$arr_ins_10m['Start_Datetime'][]		= substr($this_time,0,14) . $this_10m .'0:00';
 		$arr_ins_10m['End_Datetime'][]			= substr($this_time,0,14) . $this_10m .'9:00';
@@ -155,7 +155,7 @@ while($num_hours_to_aggregate > 0) {
 		$sum_temp+= $arr_ins_10m['Average_Temperature'][$i];
 	}	//	foreach($arr_ins_10m['Start_Datetime'] as $i => $rec) {
 
-	if($count) {
+	if($min_temp != 100) {
 		$arr_ins_1h['Start_Datetime']			= $obj_max_10m->datetime;
 		$arr_ins_1h['End_Datetime']				= $obj_max_plus59->datetime;
 		$arr_ins_1h['Aggregate_Period_Type']	= 'hour';
