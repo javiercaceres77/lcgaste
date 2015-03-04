@@ -13,7 +13,7 @@ sanitize_input();
 unset($_POST, $_GET);
 
 # some general use objects and variables ------------------
-$num_hours_to_aggregate = 12;
+$num_hours_to_aggregate = 1;
 
 # SELECT 1 hour from the raw_data and calculate the 10min and 1h aggregates.
 # Just be careful that the raw_data table has at least 1 hour of data
@@ -77,6 +77,16 @@ while($num_hours_to_aggregate > 0) {
 	while($record = my_fetch_array($sel_raw)) {
 		$this_time = $record['CC_Time'];
 		$rec_10m = substr($this_time,14,1);
+		echo '<pre>this 10m '. $this_10m;
+		echo ' record:  '. $rec_10m ."</pre>";
+		if($this_10m == 0 && $rec_10m > 0 && $count == 0) {
+			echo 'topota';
+			$this_10m = $rec_10m;
+		}
+		echo '<pre>this 10m2 '. $this_10m;
+		echo ' record:  '. $rec_10m ."</pre>";
+				
+		
 		if($rec_10m != $this_10m && $count) {
 			$arr_ins_10m['Start_Datetime'][]		= substr($this_time,0,14) . $this_10m .'0:00';
 			$arr_ins_10m['End_Datetime'][]			= substr($this_time,0,14) . $this_10m .'9:00';
@@ -93,8 +103,8 @@ while($num_hours_to_aggregate > 0) {
 			$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
 			$arr_ins_10m['Period_Description'][]	= $this_time;
 			$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
-			$arr_ins_10m['Average_Watt_Weight'][]	= $count / 60;
-			$arr_ins_10m['Average_Temp_Weight'][]	= $count / 60;
+			//$arr_ins_10m['Average_Watt_Weight'][]	= $count;
+			//$arr_ins_10m['Average_Temp_Weight'][]	= $count;
 			# reset variables
 			$this_10m = $rec_10m;
 			$max_watt = -100000;
@@ -132,8 +142,8 @@ while($num_hours_to_aggregate > 0) {
 		$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
 		$arr_ins_10m['Period_Description'][]	= $this_time;
 		$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
-		$arr_ins_10m['Average_Watt_Weight'][]	= $count / 60;
-		$arr_ins_10m['Average_Temp_Weight'][]	= $count / 60;
+		//$arr_ins_10m['Average_Watt_Weight'][]	= $count;
+		//$arr_ins_10m['Average_Temp_Weight'][]	= $count;
 	}
 	
 	# now calculate the 1 hour agg. all the others (day, week, month, year) are re-calculated every time based on the one hour
@@ -157,7 +167,7 @@ while($num_hours_to_aggregate > 0) {
 	}	//	foreach($arr_ins_10m['Start_Datetime'] as $i => $rec) {
 
 	# Floor the start time to the beginning of the hour.
-	$obj_max_10m = new date_time($obj_max_10m->odate->odate, $obj_max_10m->hour .':00:00');
+	//$obj_max_10m = new date_time($obj_max_10m->odate->odate, $obj_max_10m->hour .':00:00');
 	
 	if($min_temp != 100) {
 		$arr_ins_1h['Start_Datetime']			= $obj_max_10m->datetime;
@@ -175,10 +185,12 @@ while($num_hours_to_aggregate > 0) {
 		$arr_ins_1h['Min_Temp_Datetime']		= $min_temp_time;
 		$arr_ins_1h['Period_Description']		= $obj_max_10m->datetime;
 		$arr_ins_1h['Complete_Period_Ind']		= 'Y';
-		$arr_ins_1h['Average_Watt_Weight']		= 1;
-		$arr_ins_1h['Average_Temp_Weight']		= 1;
+		//$arr_ins_1h['Average_Watt_Weight']		= $count;
+		//$arr_ins_1h['Average_Temp_Weight']		= $count;
 	}
-	
+	pa($arr_ins_10m, '10min');
+	pa($arr_ins_1h, 'hour');
+	//continue;
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
@@ -194,7 +206,7 @@ while($num_hours_to_aggregate > 0) {
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
 
 }	//	while
-
+exit();
 # Now start to calculate the day, week, month and year aggregates
 add_aggregates('day');
 add_aggregates('week');
