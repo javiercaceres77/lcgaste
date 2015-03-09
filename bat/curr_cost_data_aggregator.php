@@ -13,7 +13,7 @@ sanitize_input();
 unset($_POST, $_GET);
 
 # some general use objects and variables ------------------
-$num_hours_to_aggregate = 3;
+$num_hours_to_aggregate = 1;
 
 # SELECT 1 hour from the raw_data and calculate the 10min and 1h aggregates.
 # Just be careful that the raw_data table has at least 1 hour of data
@@ -190,7 +190,7 @@ echo 'sql from raw: '. $sql;
 	}
 	pa($arr_ins_10m, '10min');
 	pa($arr_ins_1h, 'hour');
-	continue;
+//	continue;
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
