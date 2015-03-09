@@ -50,7 +50,7 @@ while($num_hours_to_aggregate > 0) {
 	$sql = 'SELECT * FROM Raw_Data WHERE CC_Time BETWEEN \''. $obj_max_10m->datetime .'\' AND \''. $obj_max_plus59->datetime .'\' ORDER BY CC_Time ASC';
 echo 'sql from raw: '. $sql;
 	$sel_raw = my_query($sql, $conex);
-exit();
+
 	# if nothing is selected means that we need to jump to the next raw_data
 	if(my_num_rows($sel_raw) == 0) {
 		$sql = 'SELECT MIN(CC_Time) AS Start_max FROM Raw_Data WHERE CC_Time > \''. $obj_max_plus59->datetime .'\'';
@@ -79,15 +79,14 @@ exit();
 		$this_time = $record['CC_Time'];
 		$rec_10m = substr($this_time,14,1);
 		echo '<pre>this 10m '. $this_10m;
-		echo ' record:  '. $rec_10m ."</pre>";
+		echo ' record:  '. $rec_10m;
 		if($this_10m == 0 && $rec_10m > 0 && $count == 0) {
 			echo 'topota';
 			$this_10m = $rec_10m;
 		}
-		echo '<pre>this 10m2 '. $this_10m;
+		echo 'this 10m2 '. $this_10m;
 		echo ' record:  '. $rec_10m ."</pre>";
 				
-		
 		if($rec_10m != $this_10m && $count) {
 			$arr_ins_10m['Start_Datetime'][]		= substr($this_time,0,14) . $this_10m .'0:00';
 			$arr_ins_10m['End_Datetime'][]			= substr($this_time,0,14) . $this_10m .'9:00';
