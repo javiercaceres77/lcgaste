@@ -13,7 +13,7 @@ sanitize_input();
 unset($_POST, $_GET);
 
 # some general use objects and variables ------------------
-$num_hours_to_aggregate = 1;
+$num_hours_to_aggregate = 12;
 
 # SELECT 1 hour from the raw_data and calculate the 10min and 1h aggregates.
 # Just be careful that the raw_data table has at least 1 hour of data
@@ -48,7 +48,6 @@ while($num_hours_to_aggregate > 0) {
 
 	# Select next hour from raw data
 	$sql = 'SELECT * FROM Raw_Data WHERE CC_Time BETWEEN \''. $obj_max_10m->datetime .'\' AND \''. $obj_max_plus59->datetime .'\' ORDER BY CC_Time ASC';
-echo 'sql from raw: '. $sql;
 	$sel_raw = my_query($sql, $conex);
 
 	# if nothing is selected means that we need to jump to the next raw_data
@@ -78,15 +77,10 @@ echo 'sql from raw: '. $sql;
 	while($record = my_fetch_array($sel_raw)) {
 		$this_time = $record['CC_Time'];
 		$rec_10m = substr($this_time,14,1);
-		echo '<pre>this 10m '. $this_10m;
-		echo ' record:  '. $rec_10m;
 		if($this_10m == 0 && $rec_10m > 0 && $count == 0) {
-			echo 'topota';
 			$this_10m = $rec_10m;
 		}
-		echo 'this 10m2 '. $this_10m;
-		echo ' record:  '. $rec_10m ."</pre>";
-				
+
 		if($rec_10m != $this_10m && $count) {
 			$arr_ins_10m['Start_Datetime'][]		= substr($this_time,0,14) . $this_10m .'0:00';
 			$arr_ins_10m['End_Datetime'][]			= substr($this_time,0,14) . $this_10m .'9:00';
@@ -188,8 +182,8 @@ echo 'sql from raw: '. $sql;
 		//$arr_ins_1h['Average_Watt_Weight']		= $count;
 		//$arr_ins_1h['Average_Temp_Weight']		= $count;
 	}
-	pa($arr_ins_10m, '10min');
-	pa($arr_ins_1h, 'hour');
+//	pa($arr_ins_10m, '10min');
+//	pa($arr_ins_1h, 'hour');
 //	continue;
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
@@ -206,7 +200,7 @@ echo 'sql from raw: '. $sql;
 		write_log_db('Current Cost', 'INSERT hour AGG Error', $msg, 'current_cost_data_aggregator.php');
 
 }	//	while
-exit();
+
 # Now start to calculate the day, week, month and year aggregates
 add_aggregates('day');
 add_aggregates('week');
