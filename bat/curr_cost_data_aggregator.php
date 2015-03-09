@@ -97,8 +97,8 @@ while($num_hours_to_aggregate > 0) {
 			$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
 			$arr_ins_10m['Period_Description'][]	= $this_time;
 			$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
-			//$arr_ins_10m['Average_Watt_Weight'][]	= $count;
-			//$arr_ins_10m['Average_Temp_Weight'][]	= $count;
+			$arr_ins_10m['Average_Watt_Weight'][]	= $count / 60;
+			$arr_ins_10m['Average_Temp_Weight'][]	= $count / 60;
 			# reset variables
 			$this_10m = $rec_10m;
 			$max_watt = -100000;
@@ -136,8 +136,8 @@ while($num_hours_to_aggregate > 0) {
 		$arr_ins_10m['Min_Temp_Datetime'][]		= $min_temp_time;
 		$arr_ins_10m['Period_Description'][]	= $this_time;
 		$arr_ins_10m['Complete_Period_Ind'][]	= 'Y';
-		//$arr_ins_10m['Average_Watt_Weight'][]	= $count;
-		//$arr_ins_10m['Average_Temp_Weight'][]	= $count;
+		$arr_ins_10m['Average_Watt_Weight'][]	= $count / 60;
+		$arr_ins_10m['Average_Temp_Weight'][]	= $count / 60;
 	}
 	
 	# now calculate the 1 hour agg. all the others (day, week, month, year) are re-calculated every time based on the one hour
@@ -179,8 +179,8 @@ while($num_hours_to_aggregate > 0) {
 		$arr_ins_1h['Min_Temp_Datetime']		= $min_temp_time;
 		$arr_ins_1h['Period_Description']		= $obj_max_10m->datetime;
 		$arr_ins_1h['Complete_Period_Ind']		= 'Y';
-		//$arr_ins_1h['Average_Watt_Weight']		= $count;
-		//$arr_ins_1h['Average_Temp_Weight']		= $count;
+		$arr_ins_1h['Average_Watt_Weight']		= $count / 6;
+		$arr_ins_1h['Average_Temp_Weight']		= $count / 6;
 	}
 //	pa($arr_ins_10m, '10min');
 //	pa($arr_ins_1h, 'hour');
