@@ -1,3 +1,3 @@
 # lcgaste
 LCgaste Ltd.
-Just some code for my own company
+Just some code to play with
