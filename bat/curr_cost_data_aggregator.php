@@ -41,15 +41,16 @@ while($num_hours_to_aggregate > 0) {
 	$obj_max_10m = new date_time($aux_date_time->odate->odate, $aux_date_time->hour .':00:00');
 
 	$obj_max_plus59 = $obj_max_10m->plus_mins(59);
-	# if there aren't more data on raw_data, exit the loop;
 
+	# if there aren't more data on raw_data, exit the loop;
 	if($obj_max_1m->timestamp < $obj_max_plus59->timestamp)
 		break;
 
 	# Select next hour from raw data
 	$sql = 'SELECT * FROM Raw_Data WHERE CC_Time BETWEEN \''. $obj_max_10m->datetime .'\' AND \''. $obj_max_plus59->datetime .'\' ORDER BY CC_Time ASC';
+echo 'sql from raw: '. $sql;
 	$sel_raw = my_query($sql, $conex);
-
+continue;
 	# if nothing is selected means that we need to jump to the next raw_data
 	if(my_num_rows($sel_raw) == 0) {
 		$sql = 'SELECT MIN(CC_Time) AS Start_max FROM Raw_Data WHERE CC_Time > \''. $obj_max_plus59->datetime .'\'';
