@@ -17,16 +17,40 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
 //if($_GET['func'] == 'logout')  session_unset();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]> <html class="no-js ie9" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
 <head>
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name="title" content="Pagerbook" />
-<meta name="description" content="Pagerbook"  />
-<meta name="Keywords" content="pager message" />
+
+<meta name="title" content="LCGaste" />
+<meta name="description" content="LCGaste Ltd"  />
+<meta name="keywords" content="LCGaste Rocaya ersmsk" />
 <link rel="icon" type="image/png" href="img/favicon.png" />
-<!--<link rel="shortcut icon" href="img/favicon.ico" />-->
-<link href="css/main.css" rel="stylesheet" type="text/css" />
+<!-- Facebook Metadata /-->
+<meta property="fb:page_id" content="" />
+<meta property="og:image" content="" />
+<meta property="og:description" content=""/>
+<meta property="og:title" content=""/>
+<!-- Google+ Metadata /-->
+<meta itemprop="name" content="">
+<meta itemprop="description" content="">
+<meta itemprop="image" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<link rel="shortcut icon" href="img/favicon.ico" />
+<link rel="stylesheet" href="css/gumby.css">
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+
+<script src="inc/js/libs/modernizr-2.6.2.min.js"></script>
+
 <?php
 
 # Includes  ----------------------------------
@@ -35,16 +59,14 @@ include 'inc/config.php';
 include $conf_include_path .'comm.php';
 include $conf_include_path .'connect.php';
 include $conf_include_path .'oops_comm.php';
-
+/*
 # add include path for PEAR extensions
 $path = '/usr/local/lib/php';
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 @include_once 'Mail.php';
 @include_once 'Mail/mime.php';
-
-/*include $conf_include_path .'oops_sc.php';
-if($_GET['mod'] == 'admin') include $conf_include_path .'comm_admin.php';
 */
+
 if(!$_GET['lang'] && !$_SESSION['misc']['lang']) $_GET['lang'] = $conf_default_lang;
 if($_GET['lang']) $_SESSION['misc']['lang'] = $_GET['lang'];
 
@@ -62,7 +84,6 @@ if($_GET['func'] == 'logout') {
 	jump_to($conf_main_page);
 	exit();
 }
-
 
 /*
 # Login user  ----------------------------------
@@ -84,7 +105,7 @@ if($_GET['action'] == 'login' && $_POST['user'] && $_POST['pass']) {
 
 			if($user_status == 'FIRST') {
 				# generate welcome alert for first login users and send to users page
-				$text = '<div align="center">¡Bienvenido!</div>Puedes empezar a <a href="'. $conf_main_page .'?mod=book&tab=bookings">hacer reservas</a> inmediatamente. Comprueba que tus datos son correctos y añade más datos personales si lo deseas.';
+				$text = '<div align="center">Â¡Bienvenido!</div>Puedes empezar a <a href="'. $conf_main_page .'?mod=book&tab=bookings">hacer reservas</a> inmediatamente. Comprueba que tus datos son correctos y aÃ±ade mÃ¡s datos personales si lo deseas.';
 				add_alert('user', 'info', 2, $text);
 							
 				$_POST['url'] = $conf_main_page .'?mod=user';
@@ -188,14 +209,14 @@ function show_alerts() {
 </script>
 <script language="javascript" src="<?= $conf_include_path; ?>comm.js"></script>
 <script language="javascript" src="<?= $conf_include_path; ?>ajax.js"></script>
-<title>::: PAGERBOOK.COM :::
+<title>::: LCGASTE.COM :::
 <?php  //echo ucfirst($_SESSION['login']['modules'][$_GET['mod']]['name']); ?>
 </title>
 </head>
 <body>
 <div id="container">
   <div id="header">
-    <h3><a href="<?= $conf_main_page; ?>" class="no_decoration">www.pagerbook.com</a></h3>
+    <h3><a href="<?= $conf_main_page; ?>" class="no_decoration">www.lcgaste.com</a></h3>
   </div>
   <div id="content">
     <div id="alerts_wrapper">
@@ -243,11 +264,11 @@ exit();
           <tr>
             <td></td>
             <td align="left" class="left_right_padding">e&ndash;mail</td>
-            <td align="left" class="left_right_padding">Contraseña</td>
+            <td align="left" class="left_right_padding">ContraseÃ±a</td>
             <td rowspan="2" class="left_right_padding"><input name="Submit" type="submit" onClick="JavaScript:submit_login_form()" class="button_small" value="   Entrar   " tabindex="3"/>
               <input type="hidden" name="url" id="url" value="" /></td>
             <td rowspan="2" align="right" class="left_right_padding"><a href="<?= $conf_main_page; ?>?mod=home&view=new_user">Nuevo Usuario</a><br />
-              <a href="<?= $conf_main_page; ?>?mod=home&view=rec_pwd">Contraseña olvidada</a></td>
+              <a href="<?= $conf_main_page; ?>?mod=home&view=rec_pwd">ContraseÃ±a olvidada</a></td>
           </tr>
           <tr>
             <td class="left_right_padding default_text" valign="bottom"><?php 
@@ -268,7 +289,7 @@ exit();
         <tr>
           <td align="right"><a href="<?= $conf_main_page; ?>?mod=user" title="Tu cuenta de usuario">
             <?= $ob_user->get_user_name(); ?>
-            </a>&nbsp;&nbsp;&nbsp;[<a href="<?= $conf_main_page; ?>?func=logout">cerrar sesión</a>]</td>
+            </a>&nbsp;&nbsp;&nbsp;[<a href="<?= $conf_main_page; ?>?func=logout">cerrar sesiÃ³n</a>]</td>
         </tr>
         <tr>
           <td align="right"><?php
@@ -289,7 +310,7 @@ exit();
 	if(count($arr_next_books)) {
 		$next_book = array_shift($arr_next_books);
 		$next_book_datetime = new date_time(substr($next_book['booking_datetime'], 0, 10), substr($next_book['booking_datetime'], 11, 5));
-		echo 'Próxima reserva: '. $next_book_datetime->odate->format_date('short_day') .' a las '. $next_book_datetime->format_time();
+		echo 'PrÃ³xima reserva: '. $next_book_datetime->odate->format_date('short_day') .' a las '. $next_book_datetime->format_time();
 	}
 	else
 		echo 'No tienes reservas pendientes';
@@ -334,9 +355,65 @@ if($_SESSION['login']['modules'][$_GET['mod']]['read'])
   </tr>
   <!-- ------------------------ FOOTER ----------------------- -->
   <tr>
-    <td align="center" class="small_text"><a href="<?= $conf_main_page; ?>?mod=home&view=tycs">Términos y condiciones</a>|<a href="<?= $conf_main_page; ?>?mod=home&view=contact">Contacto</a>|<a href="<?= $conf_main_page; ?>?mod=home&view=about">Quienes somos</a><br />
+    <td align="center" class="small_text"><a href="<?= $conf_main_page; ?>?mod=home&view=tycs">TÃ©rminos y condiciones</a>|<a href="<?= $conf_main_page; ?>?mod=home&view=contact">Contacto</a>|<a href="<?= $conf_main_page; ?>?mod=home&view=about">Quienes somos</a><br />
       <br /></td>
   </tr>
 </table>
+
+	<!-- Grab Google CDN's jQuery, fall back to local if offline -->
+	<!-- 2.0 for modern browsers, 1.10 for .oldie -->
+	<script>
+	var oldieCheck = Boolean(document.getElementsByTagName('html')[0].className.match(/\soldie\s/g));
+	if(!oldieCheck) {
+		document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"><\/script>');
+	} else {
+		document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
+	}
+	</script>
+	<script>
+	if(!window.jQuery) {
+		if(!oldieCheck) {
+			document.write('<script src="inc/js/libs/jquery-2.0.2.min.js"><\/script>');
+		} else {
+			document.write('<script src="inc/js/libs/jquery-1.10.1.min.js"><\/script>');
+		}
+	}
+	</script>
+	<!--
+	Include gumby.js followed by UI modules followed by gumby.init.js
+	Or concatenate and minify into a single file -->
+	<script gumby-touch="inc/js/libs" src="inc/js/libs/gumby.js"></script>
+	<script src="inc/js/libs/ui/gumby.retina.js"></script>
+	<script src="inc/js/libs/ui/gumby.fixed.js"></script>
+	<script src="inc/js/libs/ui/gumby.skiplink.js"></script>
+	<script src="inc/js/libs/ui/gumby.toggleswitch.js"></script>
+	<script src="inc/js/libs/ui/gumby.checkbox.js"></script>
+	<script src="inc/js/libs/ui/gumby.radiobtn.js"></script>
+	<script src="inc/js/libs/ui/gumby.tabs.js"></script>
+	<script src="inc/js/libs/ui/gumby.navbar.js"></script>
+	<script src="inc/js/libs/ui/jquery.validation.js"></script>
+	<script src="inc/inc/js/libs/gumby.init.js"></script>
+	<!--
+	Google's recommended deferred loading of JS
+	gumby.min.js contains gumby.js, all UI modules and gumby.init.js
+	Note: If you opt to use this method of defered loading,
+	ensure that any javascript essential to the initial
+	display of the page is included separately in a normal
+	script tag.
+	<script type="text/javascript">
+	function downloadJSAtOnload() {
+	var element = document.createElement("script");
+	element.src = "js/libs/gumby.min.js";
+	document.body.appendChild(element);
+	}
+	if (window.addEventListener)
+	window.addEventListener("load", downloadJSAtOnload, false);
+	else if (window.attachEvent)
+	window.attachEvent("onload", downloadJSAtOnload);
+	else window.onload = downloadJSAtOnload;
+	</script> -->
+	<script src="inc/js/plugins.js"></script>
+	<script src="inc/js/main.js"></script>
+
 </body>
 </html>
