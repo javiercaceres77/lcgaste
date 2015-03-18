@@ -290,7 +290,7 @@ function add_aggregates($period_type) {
 		$sql = 'SELECT 1 AS exists_after FROM Aggregate_Data WHERE Start_Datetime > \''. $arr_result['End_Datetime'] .'\' AND Aggregate_Period_Type = \'hour\' LIMIT 1';
 		echo 'sql: '. $sql;
 		$sel = my_query($sql, $conex);
-		$exists_after = my_result($sel, 0, 'Min_Temp_Datetime');
+		$exists_after = my_result($sel, 0, 'exists_after');
 		if($exists_after)
 			$arr_result['Complete_Period_Ind']		= 'Y';
 		else
