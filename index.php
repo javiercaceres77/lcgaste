@@ -98,19 +98,14 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		<div style="top: 0px;" class="pretty navbar unfixed" gumby-fixed="top" id="nav3">
 			<div class="row">
 				<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
-				<h3 class="eight columns">
-					<a href="<?= $conf_main_page; ?>">
-						www.lcgaste.com
-					</a>
-				</h3>
+				<div class="eight columns"><h3><a href="<?= $conf_main_page; ?>">www.lcgaste.com</a></h3></div>
 				<div class="four columns">
 					<div class="append field">
 						<input class="normal email input" placeholder="Email" type="email">
 						<span class="adjoined">@</span>
-					  </div>
+					</div>
 					<div class="field"><input class="normal password input" placeholder="Password" type="password"></div>
 					<div class="pretty medium info btn"><button><i class="icon-lock"></i></button></div>
-					
 				</div>
 			</div>
 		</div>
