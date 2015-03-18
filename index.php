@@ -53,7 +53,7 @@ if($_GET['func'] == 'logout') session_unset();
 	<link rel="stylesheet" href="css/gumby.css">
 	<!-- <link rel="stylesheet" href="css/style.css"> -->
 
-	<script src="js/libs/modernizr-2.6.2.min.js"></script>
+	<script src="inc/js/libs/modernizr-2.6.2.min.js"></script>
 <?php
 # Includes ----------------------------------
 include 'inc/config.php';
