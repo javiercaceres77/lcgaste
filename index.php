@@ -183,12 +183,12 @@ getData3(url, 'alerts_box');
 		<div style="top: 0px;" class="pretty navbar unfixed" gumby-fixed="top" id="nav3">
 			<div class="row">
 				<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
-				<h1 class="six columns">
+				<h1 class="four columns">
 					<a href="<?= $conf_main_page; ?>">
 						www.lcgaste.com
 					</a>
 				</h1>
-				<ul class="six columns">
+				<ul class="eight columns">
 					<li>login here</li>
 				</ul>
 			</div>
