@@ -188,7 +188,7 @@ if($ob_user->user_id == $conf_generic_user_id) {
 		$arr_countries = dump_table2($ob_table->get_translated_table_name(), 'country_id', $arr_fields, ' WHERE active_ind = \'1\'');
 //		pa($arr_countries);
 		?>
-          <select name="country" class="input_normal"  id="country-selector" style="width: 250px; height: 300px;" onblur="JavaScript:check_value('country','');" />
+          <select name="country" class="input_normal"  id="country-selector" style="width: 250px;" onblur="JavaScript:check_value('country','');" />
           <?php
 		  if(!$_POST['country']) $_POST['country'] = 'ES';
 		  foreach($arr_countries as $country) {
