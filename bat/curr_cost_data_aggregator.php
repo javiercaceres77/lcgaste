@@ -184,7 +184,7 @@ while($num_hours_to_aggregate > 0) {
 	}
 //	pa($arr_ins_10m, '10min');
 //	pa($arr_ins_1h, 'hour');
-//	continue;
+	continue;
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
@@ -282,12 +282,16 @@ function add_aggregates($period_type) {
 	$arr_result['Aggregate_Period_Type']	= $period_type;
 	$arr_result['Period_Description']		= $obj_start_datetime->datetime;	// create function to get description
 
+pa($arr_result, $period_type);
+echo 'max_end_datetime: '. $max_end_datetime;
+
 	# determine if the period is to be opened or closed:
 	if($arr_result['End_Datetime'] == $max_end_datetime)
 		$arr_result['Complete_Period_Ind']		= 'Y';
 	else {
 		# if exists more data after the end_datetime, means that the period needs to be closed.
 		$sql = 'SELECT 1 AS exists_after FROM Aggregate_Data WHERE Start_Datetime > \''. $arr_result['End_Datetime'] .'\' AND Aggregate_Period_Type = \'hour\' LIMIT 1';
+		echo 'sql: '. $sql;
 		$sel = my_query($sql, $conex);
 		$exists_after = my_result($sel, 0, 'Min_Temp_Datetime');
 		if($exists_after)
