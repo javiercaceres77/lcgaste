@@ -223,8 +223,25 @@ function add_aggregates($period_type) {
 		if($aux_date_time->datetime != '0000-00-00 00:00:00') {
 			$aux_start = $aux_date_time->calculate_start_of_period($period_type);
 			$obj_start_datetime = $aux_start->plus_period($period_type, 1);
+			# see if there is any hour data for that period
+			$aux_end_datetime = $obj_start_datetime->calculate_end_of_period($period_type);
+			$sql = 'SELECT 1 AS exists_data FROM Aggregate_Data WHERE Start_Datetime BETWEEN \''. $obj_start_datetime->datetime .'\' AND \''. $aux_end_datetime->datetime .'\' AND Aggregate_Period_Type = \'hour\' LIMIT 1';
+			$sel = my_query($sql, $conex);
+			$exists_data = my_result($sel, 0, 'exists_data');
+
+			if(!$exists_data) {		#if data exists do nothing
+				# select the next available 
+				$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime > \''. $aux_end_datetime->datetime .'\'';
+				echo $sql;
+				
+				$sel = my_query($sql, $conex);
+				$aux_date_time = new date_time(my_result($sel, 0, 'Min_Start_Datetime'));
+				$obj_start_datetime = $aux_date_time->calculate_start_of_period($period_type);
+				
+				pa($obj_start_datetime);
+			}
 		}
-		else {
+		else { # it's never going through here after the first run
 			# There aren't periods at all; Select what's on the 1h aggregates.
 			$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\'';
 			$sel = my_query($sql, $conex);
@@ -288,7 +305,6 @@ function add_aggregates($period_type) {
 	else {
 		# if exists more data after the end_datetime, means that the period needs to be closed.
 		$sql = 'SELECT 1 AS exists_after FROM Aggregate_Data WHERE Start_Datetime > \''. $arr_result['End_Datetime'] .'\' AND Aggregate_Period_Type = \'hour\' LIMIT 1';
-		echo 'sql: '. $sql;
 		$sel = my_query($sql, $conex);
 		$exists_after = my_result($sel, 0, 'exists_after');
 		if($exists_after)
@@ -296,9 +312,7 @@ function add_aggregates($period_type) {
 		else
 			$arr_result['Complete_Period_Ind']		= 'N';
 	}
-
-pa($arr_result, $period_type);
-
+return;
 	if($exist_open_period) {
 		# update the existing period: the one that starts at the same time (and has the same period type)
 		$keys = array('Start_Datetime','Aggregate_Period_Type');
