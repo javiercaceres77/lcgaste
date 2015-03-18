@@ -282,9 +282,6 @@ function add_aggregates($period_type) {
 	$arr_result['Aggregate_Period_Type']	= $period_type;
 	$arr_result['Period_Description']		= $obj_start_datetime->datetime;	// create function to get description
 
-pa($arr_result, $period_type);
-echo 'max_end_datetime: '. $max_end_datetime;
-
 	# determine if the period is to be opened or closed:
 	if($arr_result['End_Datetime'] == $max_end_datetime)
 		$arr_result['Complete_Period_Ind']		= 'Y';
@@ -299,6 +296,8 @@ echo 'max_end_datetime: '. $max_end_datetime;
 		else
 			$arr_result['Complete_Period_Ind']		= 'N';
 	}
+
+pa($arr_result, $period_type);
 
 	if($exist_open_period) {
 		# update the existing period: the one that starts at the same time (and has the same period type)
