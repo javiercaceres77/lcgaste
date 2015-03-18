@@ -108,8 +108,8 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 						<input class="normal email input" placeholder="Email" type="email">
 						<span class="adjoined">@</span>
 					  </span>
-					<span> class="field"><input class="normal password input" placeholder="Password" type="password">
-					<span> class="pretty medium info btn"><button>login</button>
+					<span class="field"><input class="normal password input" placeholder="Password" type="password"></span>
+					<span class="pretty medium info btn"><button>login</button></span>
 					</li>
 				</ul>
 			</div>
