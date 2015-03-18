@@ -184,7 +184,7 @@ while($num_hours_to_aggregate > 0) {
 	}
 //	pa($arr_ins_10m, '10min');
 //	pa($arr_ins_1h, 'hour');
-	continue;
+//	continue;
 	$ok_ins_10m = insert_array_db_multi('Aggregate_Data', $arr_ins_10m);
 	$msg = 'Inserted 10min aggregates: '. $arr_ins_10m['Period_Description'][1];
 	if($ok_ins_10m)
@@ -232,13 +232,9 @@ function add_aggregates($period_type) {
 			if(!$exists_data) {		#if data exists do nothing
 				# select the next available 
 				$sql = 'SELECT MIN(Start_Datetime) AS Min_Start_Datetime FROM Aggregate_Data WHERE Aggregate_Period_Type = \'hour\' AND Start_Datetime > \''. $aux_end_datetime->datetime .'\'';
-				echo $sql;
-				
 				$sel = my_query($sql, $conex);
 				$aux_date_time = new date_time(my_result($sel, 0, 'Min_Start_Datetime'));
 				$obj_start_datetime = $aux_date_time->calculate_start_of_period($period_type);
-				
-				pa($obj_start_datetime);
 			}
 		}
 		else { # it's never going through here after the first run
@@ -312,7 +308,7 @@ function add_aggregates($period_type) {
 		else
 			$arr_result['Complete_Period_Ind']		= 'N';
 	}
-return;
+
 	if($exist_open_period) {
 		# update the existing period: the one that starts at the same time (and has the same period type)
 		$keys = array('Start_Datetime','Aggregate_Period_Type');
