@@ -26,7 +26,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 <!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
 <!--[if gt IE 9]><!--> <html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
 <head>
-<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 <meta name="title" content="LCGaste" />
