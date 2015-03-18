@@ -104,12 +104,12 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 					</a>
 				</h3>
 				<ul class="four columns">
-					<li><span class="append field">
+					<li><div class="append field">
 						<input class="normal email input" placeholder="Email" type="email">
 						<span class="adjoined">@</span>
-					  </span>
-					<span class="field"><input class="normal password input" placeholder="Password" type="password"></span>
-					<span class="pretty medium info btn"><button>login</button></span>
+					  </div>
+					<div class="field"><input class="normal password input" placeholder="Password" type="password"></div>
+					<div class="pretty medium info btn"><button><i class="icon-lock"></i></button></div>
 					</li>
 				</ul>
 			</div>
