@@ -285,8 +285,16 @@ function add_aggregates($period_type) {
 	# determine if the period is to be opened or closed:
 	if($arr_result['End_Datetime'] == $max_end_datetime)
 		$arr_result['Complete_Period_Ind']		= 'Y';
-	else
-		$arr_result['Complete_Period_Ind']		= 'N';
+	else {
+		# if exists more data after the end_datetime, means that the period needs to be closed.
+		$sql = 'SELECT 1 AS exists_after FROM Aggregate_Data WHERE Start_Datetime > \''. $arr_result['End_Datetime'] .'\' AND Aggregate_Period_Type = \'hour\' LIMIT 1';
+		$sel = my_query($sql, $conex);
+		$exists_after = my_result($sel, 0, 'Min_Temp_Datetime');
+		if($exists_after)
+			$arr_result['Complete_Period_Ind']		= 'Y';
+		else
+			$arr_result['Complete_Period_Ind']		= 'N';
+	}
 
 	if($exist_open_period) {
 		# update the existing period: the one that starts at the same time (and has the same period type)
@@ -300,7 +308,6 @@ function add_aggregates($period_type) {
 			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
 		else
 			write_log_db('Current Cost', 'UPDATE '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
-			
 	}
 	else {
 		# insert the period
@@ -311,7 +318,6 @@ function add_aggregates($period_type) {
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG OK', $msg, 'current_cost_data_aggregator.php');
 		else
 			write_log_db('Current Cost', 'INSERT '. $period_type .' AGG Error', $msg, 'current_cost_data_aggregator.php');
-
 	}
 }	//	function add_aggregates($period_type) {
 
