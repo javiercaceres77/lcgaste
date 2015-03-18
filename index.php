@@ -96,10 +96,15 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 <body>
 	<div class="navcontain">
 		<div style="top: 0px;" class="pretty navbar unfixed" gumby-fixed="top" id="nav3">
+			<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
+			<div class="eight columns"><h3><a href="<?= $conf_main_page; ?>">www.lcgaste.com</a></h3></div>
+			
+		</div>
+	</div>
+	middle
 			<div class="row">
-				<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
 				<div class="eight columns"><h3><a href="<?= $conf_main_page; ?>">www.lcgaste.com</a></h3></div>
-				<div class="four columns">
+				<div class="four columns field">
 					<div class="append field">
 						<input class="normal email input" placeholder="Email" type="email">
 						<span class="adjoined">@</span>
@@ -108,9 +113,6 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 					<div class="pretty medium info btn"><button><i class="icon-lock"></i></button></div>
 				</div>
 			</div>
-		</div>
-	</div>
-
 	<!-- Grab Google CDN's jQuery, fall back to local if offline -->
 	<!-- 2.0 for modern browsers, 1.10 for .oldie -->
 	<script>
