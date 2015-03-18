@@ -43,7 +43,7 @@ if($_GET['func'] == 'logout') session_unset();
 
 <link rel="shortcut icon" href="img/favicon.ico" />
 <link rel="stylesheet" href="css/gumby.css">
-<link rel="stylesheet" href="css/main.css" type="text/css" />
+<!--<link rel="stylesheet" href="css/main.css" type="text/css" />-->
 <script src="inc/js/libs/modernizr-2.6.2.min.js"></script>
 <?php
 # Includes ----------------------------------
