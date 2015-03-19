@@ -40,7 +40,7 @@ h6 {
 }
 ul, ol {
 	list-style: none;
-}
+}*/
 a:link {
 	text-decoration: none;
 	color:#006699;
@@ -55,7 +55,7 @@ a:hover {
 }
 .no_decoration, .no_decoration:hover, .no_decoration:link, .no_decoration:visited, .no_decoration:active {
 	text-decoration:none;
-}*/
+}
 
 /* ----------------------- CONTAINERS -------------------- */
 #container {
