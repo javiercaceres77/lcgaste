@@ -30,7 +30,7 @@ if($_GET['func'] == 'logout') session_unset();
 			 More info: h5bp.com/b/378 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
-	<title>:: Lcgaste.com ::</title>
+	<title><?= time('H:i:s'); ?> ::: Lcgaste.com :::</title>
 	<meta name="description" content="LCGaste Ltd" />
 	<meta name="keywords" content="LCGaste Rocaya ersmsk" />
 	<meta name="author" content="humans.txt">
@@ -51,7 +51,7 @@ if($_GET['func'] == 'logout') session_unset();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 	<link rel="stylesheet" href="css/gumby.css">
-	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<link rel="stylesheet" href="css/main.css">
 
 	<script src="inc/js/libs/modernizr-2.6.2.min.js"></script>
 <?php
@@ -95,24 +95,21 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 
 <body>
 	<div class="navcontain">
-		<div style="top: 0px;" class="pretty navbar unfixed" gumby-fixed="top" id="nav3">
-			<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
-			<div class="eight columns"><h3><a href="<?= $conf_main_page; ?>">www.lcgaste.com</a></h3></div>
-			
-		</div>
-	</div>
-	middle
-			<div class="row">
+		<div class="row">
+			<div style="top: 0px;" class="pretty navbar unfixed" gumby-fixed="top" id="nav3">
+				<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
 				<div class="eight columns"><h3><a href="<?= $conf_main_page; ?>">www.lcgaste.com</a></h3></div>
-				<div class="four columns field">
-					<div class="append field">
-						<input class="normal email input" placeholder="Email" type="email">
-						<span class="adjoined">@</span>
-					</div>
-					<div class="field"><input class="normal password input" placeholder="Password" type="password"></div>
-					<div class="pretty medium info btn"><button><i class="icon-lock"></i></button></div>
+				<div class="four columns">
+					<ul>
+						<li class="append field"><input class="narrow email input" placeholder="Email" type="email" id="user">
+							<span class="adjoined">@</span></li>
+						<li class="field"><input class="narrow password input" placeholder="Passw" type="password" id="pass">
+						<div class="pretty medium info btn"><button><i class="icon-lock"></i></button></div></li>
+					</ul>
 				</div>
 			</div>
+		</div>
+	</div>
 	<!-- Grab Google CDN's jQuery, fall back to local if offline -->
 	<!-- 2.0 for modern browsers, 1.10 for .oldie -->
 	<script>
