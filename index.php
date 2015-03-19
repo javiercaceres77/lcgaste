@@ -103,8 +103,9 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 				<form name="login" id="login" action="post" 
 					<li class="append field"><input class="normal email input" placeholder="Email" type="email" id="user">
 							<span class="adjoined">@</span></li>
-					<li class="field"><input class="normal password input" placeholder="Passw" type="password" id="pass"></li>
-					<li><div class="pretty medium info btn"><input type="submit"><i class="icon-lock-open"></i></input></div></li>
+					<li class="append field"><input class="normal password input" placeholder="password" type="password" id="pass">
+							<span class="adjoined">*</span></li>
+					<div class="pretty medium info btn"><button>Button</button></div>
 				</ul>
 				</div>
 			</div>
