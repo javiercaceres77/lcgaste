@@ -30,7 +30,7 @@ if($_GET['func'] == 'logout') session_unset();
 			 More info: h5bp.com/b/378 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
-	<title><?= time('H:i:s'); ?> ::: Lcgaste.com :::</title>
+	<title><?= date('H:i:s'); ?> ::: Lcgaste.com :::</title>
 	<meta name="description" content="LCGaste Ltd" />
 	<meta name="keywords" content="LCGaste Rocaya ersmsk" />
 	<meta name="author" content="humans.txt">
