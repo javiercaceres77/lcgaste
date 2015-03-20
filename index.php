@@ -105,7 +105,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 								<span class="adjoined">@</span></li>
 						<li class="append field"><input class="normal password input" placeholder="password" type="password" id="pass">
 								<span class="adjoined">*</span></li>
-						<div class="pretty medium info btn"><button><i class="icon-lock-open"></i></button></div>
+						<li class="pretty medium info btn"><button><i class="icon-lock-open"></i></button></li>
 					</form>
 				</ul>
 			</div>
