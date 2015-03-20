@@ -51,7 +51,7 @@ if($_GET['func'] == 'logout') session_unset();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 	<link rel="stylesheet" href="css/gumby.css">
-	<link rel="stylesheet" href="css/main.css">
+	<!--<link rel="stylesheet" href="css/main.css">-->
 
 	<script src="inc/js/libs/modernizr-2.6.2.min.js"></script>
 <?php
@@ -105,9 +105,9 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 							<span class="adjoined">@</span></li>
 					<li class="append field"><input class="normal password input" placeholder="password" type="password" id="pass">
 							<span class="adjoined">*</span></li>
-					<div class="pretty medium info btn"><button>Button</button></div>
+					<div class="pretty medium info btn"><button><i class="icon-lock-open"></i></button></div>
 				</ul>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
