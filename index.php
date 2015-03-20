@@ -100,7 +100,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 				<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
 				<h3 class="six columns"><a href="<?= $conf_main_page; ?>">www.lcgaste.com</a></h3>
 				<ul class="six columns">
-					<form name="login" id="login" action="post" 
+					<form action="<?= $conf_main_page; ?>?action=login" method="post" name="login_form"> 
 						<li class="append field"><input class="normal email input" placeholder="Email" type="email" id="user">
 								<span class="adjoined">@</span></li>
 						<li class="append field"><input class="normal password input" placeholder="password" type="password" id="pass">
