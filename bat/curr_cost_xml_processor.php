@@ -57,25 +57,31 @@ foreach($arr_directory as $file_name) {
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
 						if($obj_line_time->minute == $this_min) {
-							$accum_temp+= (float) $objxml->tmpr;
-							$accum_watt+= (float) $objxml->ch1->watts;
-							$count++;
+							if($objxml->tmpr <> 0 || $objxml->ch1->watts <> 0) {
+								$accum_temp+= (float) $objxml->tmpr;
+								$accum_watt+= (float) $objxml->ch1->watts;
+								$count++;
+							}
 						}
 						else {
-							$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
-							$arr_ins_regular['Temperature'][] = $accum_temp / $count;
-							$arr_ins_regular['Wattage'][] = $accum_watt / $count;
-							$this_min = $obj_line_time->minute;
-							$accum_temp = (float) $objxml->tmpr;
-							$accum_watt = (float) $objxml->ch1->watts;
-							$count = 1;
+							if($objxml->tmpr <> 0 || $objxml->ch1->watts <> 0) {
+								$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
+								$arr_ins_regular['Temperature'][] = $accum_temp / $count;
+								$arr_ins_regular['Wattage'][] = $accum_watt / $count;
+								$this_min = $obj_line_time->minute;
+								$accum_temp = (float) $objxml->tmpr;
+								$accum_watt = (float) $objxml->ch1->watts;
+								$count = 1;
+							}
 						}
 					}	//	elseif($objxml->tmpr) {	
 				}	//	while(($line = fgets($file, 4096)) !== false) {
 				# insert the last value after the file
-				$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
-				$arr_ins_regular['Temperature'][] = $accum_temp / $count;
-				$arr_ins_regular['Wattage'][] = $accum_watt / $count;
+				if($count > 0) {
+					$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
+					$arr_ins_regular['Temperature'][] = $accum_temp / $count;
+					$arr_ins_regular['Wattage'][] = $accum_watt / $count;
+				}
 		}	//		if($file) {
 	
 		fclose($file);
