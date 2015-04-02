@@ -9,7 +9,7 @@ cc128xml = cc128.readlines(6)
 print cc128xml
 
 now = datetime.datetime.now()
-print now
+print datetime.dst()
 
-nowgmt = time.gmtime()
+nowgmt = time.localtime()
 print nowgmt
