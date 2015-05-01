@@ -117,7 +117,7 @@ function build_arr_times($obj_curr_datetime) {
 	$min_m = 1;	$max_m = 84;
 	$ret_array = array();
 	
-	for($i = $min_h; $i = $max_h; $i+=2) {
+	for($i = $min_h; $i < $max_h; $i+=2) {
 		$str_index = 'h'. add_zeroes2($i,3);
 		$arr_datetime = $obj_curr_datetime->plus_mins(-$i * 60);
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
