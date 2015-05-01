@@ -59,7 +59,10 @@ foreach($arr_directory as $file_name) {
 					if($objxml->hist) {			# this is a history line
 						foreach($objxml->hist->data[0] as $id => $value) {
 							if($arr_history_times[$id])
-								$arr_history_times[$id]['w'] = (float) $value;
+								if($arr_history_times[$id]['t'] == 'h')
+									$arr_history_times[$id]['w'] = (float) $value / 2;
+								else
+									$arr_history_times[$id]['w'] = (float) $value;
 						}
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
@@ -128,6 +131,7 @@ function build_arr_times($obj_curr_datetime) {
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
 			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
 			$ret_array[$str_index]['w'] = '';
+			$ret_array[$str_index]['t'] = 'h';
 		}
 	}
 	
@@ -138,6 +142,7 @@ function build_arr_times($obj_curr_datetime) {
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
 			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
 			$ret_array[$str_index]['w'] = '';
+			$ret_array[$str_index]['t'] = 'd';
 		}
 	}
 	
@@ -148,6 +153,7 @@ function build_arr_times($obj_curr_datetime) {
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
 			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
 			$ret_array[$str_index]['w'] = '';
+			$ret_array[$str_index]['t'] = 'm';
 		}
 	}
 	
