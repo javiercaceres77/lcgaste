@@ -55,11 +55,12 @@ foreach($arr_directory as $file_name) {
 				$obj_line_time = new my_time($objxml->time);
 				# check that it is the same hour as some lines could be included in incorrect files.
 				if($obj_line_time->hour == $obj_file_datetime->hour)
+				{
 					if($objxml->hist) {			# this is a history line
-						
-						if($objxml->hist->data[0]->d030)
-							pa($objxml->hist->data[0]);
-						continue;
+						foreach($objxml->hist->data[0] as $id => $value) {
+							if($arr_history_times[$id])
+								$arr_history_times[$id]['w'] = $value;
+						}
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
 						continue;
@@ -81,14 +82,18 @@ foreach($arr_directory as $file_name) {
 								$count = 1;
 							}
 						}
-					}	//	elseif($objxml->tmpr) {	
-				}	//	while(($line = fgets($file, 4096)) !== false) {
-				# insert the last value after the file
-				if($count > 0) {
-					$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
-					$arr_ins_regular['Temperature'][] = $accum_temp / $count;
-					$arr_ins_regular['Wattage'][] = $accum_watt / $count;
-				}
+					}	//	elseif($objxml->tmpr) {
+				}	//	if($obj_line_time->hour == $obj_file_datetime->hour)
+			}	//	while(($line = fgets($file, 4096)) !== false) {
+			
+			pa($arr_history_times);
+			
+			# insert the last value after the file
+			if($count > 0) {
+				$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
+				$arr_ins_regular['Temperature'][] = $accum_temp / $count;
+				$arr_ins_regular['Wattage'][] = $accum_watt / $count;
+			}
 		}	//		if($file) {
 	
 		fclose($file);
@@ -121,8 +126,8 @@ function build_arr_times($obj_curr_datetime) {
 		$str_index = 'h'. add_zeroes2($i,3);
 		$arr_datetime = $obj_curr_datetime->plus_mins(-$i * 60);
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
-			$ret_array['h'][$str_index]['d'] = $arr_datetime->datetime;
-			$ret_array['h'][$str_index]['w'] = '';
+			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
+			$ret_array[$str_index]['w'] = '';
 		}
 	}
 	
@@ -131,8 +136,8 @@ function build_arr_times($obj_curr_datetime) {
 		$arr_datetime = $obj_curr_datetime->plus_period('day',-$i);
 		$arr_datetime = $arr_datetime->calculate_start_of_period('day');
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
-			$ret_array['d'][$str_index]['d'] = $arr_datetime->datetime;
-			$ret_array['d'][$str_index]['w'] = '';
+			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
+			$ret_array[$str_index]['w'] = '';
 		}
 	}
 	
@@ -141,8 +146,8 @@ function build_arr_times($obj_curr_datetime) {
 		$arr_datetime = $obj_curr_datetime->plus_period('month',-$i);
 		$arr_datetime = $arr_datetime->calculate_start_of_period('month');
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
-			$ret_array['m'][$str_index]['d'] = $arr_datetime->datetime;
-			$ret_array['m'][$str_index]['w'] = '';
+			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
+			$ret_array[$str_index]['w'] = '';
 		}
 	}
 	
