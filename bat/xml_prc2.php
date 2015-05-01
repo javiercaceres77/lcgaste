@@ -46,6 +46,9 @@ foreach($arr_directory as $file_name) {
 			$count = 1;
 
 			$arr_ins_regular = array();
+			
+			$arr_history_times = build_arr_times($obj_file_datetime);
+			pa($arr_history_times);
 			#$arr_ins_history = array();
 			while(($line = fgets($file, 4096)) !== false) {
 				$objxml = new SimpleXMLElement($line);
@@ -53,6 +56,7 @@ foreach($arr_directory as $file_name) {
 				# check that it is the same hour as some lines could be included in incorrect files.
 				if($obj_line_time->hour == $obj_file_datetime->hour)
 					if($objxml->hist) {			# this is a history line
+						
 						if($objxml->hist->data[0]->d030)
 							pa($objxml);
 						continue;
@@ -105,4 +109,11 @@ foreach($arr_directory as $file_name) {
 		}
 	}	//if($file_name <> '.' && $file_name <> '..')
 }	//foreach($arr_directory as $file_name) {
+
+function build_arr_times($obj_curr_datetime) {
+	pa($obj_curr_datetime);
+	return array();
+}
+
+
 ?>
