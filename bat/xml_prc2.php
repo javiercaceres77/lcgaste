@@ -53,7 +53,7 @@ foreach($arr_directory as $file_name) {
 				# check that it is the same hour as some lines could be included in incorrect files.
 				if($obj_line_time->hour == $obj_file_datetime->hour)
 					if($objxml->hist) {			# this is a history line
-						if($objxml->hist->data[0]->d090)
+						if($objxml->hist->data[0]->d030)
 							pa($objxml);
 						continue;
 					}
