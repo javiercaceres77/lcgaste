@@ -111,8 +111,22 @@ foreach($arr_directory as $file_name) {
 }	//foreach($arr_directory as $file_name) {
 
 function build_arr_times($obj_curr_datetime) {
-	pa($obj_curr_datetime);
-	return array();
+	$floor_date = new date_time('2015-02-06'); // do not measure any data before that date
+	$min_h = 4;	$max_h = 744;
+	$min_d = 1;	$max_d - 90;
+	$min_m = 1;	$max_m = 84;
+	$ret_array = array();
+	
+	for($i = $min_h; $i = $max_h; $i+=2) {
+		$str_index = 'h'. add_zeroes2($i,3);
+		$arr_datetime = $obj_curr_datetime->plus_mins(-$i * 60);
+		if($arr_datetime->timestamp > $floor_date->timestamp) {
+			$ret_array['h'][$str_index]['d'] = $arr_datetime->datetime;
+			$ret_array['h'][$str_index]['w'] = '';
+		}
+	}
+	
+	return $ret_array;
 }
 
 
