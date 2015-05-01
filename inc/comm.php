@@ -393,6 +393,10 @@ function add_zeroes($value) {
 		return $value;
 }
 
+function add_zeroes2($value, $total_len) {
+	return str_repeat('0',($total_len - strlen($value))) . $value;
+}
+
 //-----------------------------------  OTHER FUNCTIONS  ---------------------------------
 function write_log($type, $message = '', $addfile = '') {
 	global $conf_logs_path;
