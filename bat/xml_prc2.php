@@ -17,12 +17,12 @@ unset($_POST, $_GET);
 # some variables use objects --------------------------------
 $xml_files_path = '/home/javipi/'; //ccxmls/';
 $bin_path = '/home/javipi/bin/'; //'/media/usb/bin/';
-$num_files_to_process = 1;
+$num_files_to_process = 2;
 
 # scan directory
 $arr_directory = array('currxml_20150501_0500.dat'); //scandir($xml_files_path);
 # remove the last file (the one that is being written now)
-array_pop($arr_directory);
+//array_pop($arr_directory);
 
 foreach($arr_directory as $file_name) {
 	$num_files_to_process--;	if($num_files_to_process <= 0) break;
@@ -53,7 +53,8 @@ foreach($arr_directory as $file_name) {
 				# check that it is the same hour as some lines could be included in incorrect files.
 				if($obj_line_time->hour == $obj_file_datetime->hour)
 					if($objxml->hist) {			# this is a history line
-						continue;
+						pa($objxml);
+						break;
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
 						if($obj_line_time->minute == $this_min) {
@@ -85,20 +86,20 @@ foreach($arr_directory as $file_name) {
 		}	//		if($file) {
 	
 		fclose($file);
-	
-		$ok_ins_reg = insert_array_db_multi('Raw_Data', $arr_ins_regular);
+	exit();
+	//	$ok_ins_reg = insert_array_db_multi('Raw_Data', $arr_ins_regular);
 		$msg = 'Inserted '. count($arr_ins_regular['CC_Time']) .' records from file: '. $file_name;
 		if($ok_ins_reg)
 		{
 			//rename($xml_files_path . $file_name, $bin_path . $file_name);					# move file to $bin_path
-			if(unlink($xml_files_path . $file_name))
-				echo 'borrado';
-			else
-				echo 'error ';
-			write_log_db('Current Cost', 'INSERT OK', $msg, 'curr_cost_xml_processor.php');
+	//		if(unlink($xml_files_path . $file_name))
+	//			echo 'borrado';
+	//		else
+	//			echo 'error ';
+	//		write_log_db('Current Cost', 'INSERT OK', $msg, 'curr_cost_xml_processor.php');
 		}
 		else {
-			write_log_db('Current Cost', 'INSERT ERROR', $msg, 'curr_cost_xml_processor.php');
+	//		write_log_db('Current Cost', 'INSERT ERROR', $msg, 'curr_cost_xml_processor.php');
 		}
 	}	//if($file_name <> '.' && $file_name <> '..')
 }	//foreach($arr_directory as $file_name) {
