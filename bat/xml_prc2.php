@@ -48,7 +48,7 @@ foreach($arr_directory as $file_name) {
 			$arr_ins_regular = array();
 			
 			$arr_history_times = build_arr_times($obj_file_datetime);
-			pa($arr_history_times);
+			//pa($arr_history_times);
 			#$arr_ins_history = array();
 			while(($line = fgets($file, 4096)) !== false) {
 				$objxml = new SimpleXMLElement($line);
@@ -58,7 +58,7 @@ foreach($arr_directory as $file_name) {
 					if($objxml->hist) {			# this is a history line
 						
 						if($objxml->hist->data[0]->d030)
-							pa($objxml);
+							pa($objxml->hist->data[0]);
 						continue;
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
