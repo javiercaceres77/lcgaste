@@ -55,10 +55,10 @@ foreach($arr_directory as $file_name) {
 					if($objxml->hist) {			# this is a history line
 						if($objxml->hist->data[0]->d090)
 							pa($objxml);
-						continue();
+						continue;
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
-						continue();
+						continue;
 						if($obj_line_time->minute == $this_min) {
 							if($objxml->tmpr <> 0 || $objxml->ch1->watts <> 0) {
 								$accum_temp+= (float) $objxml->tmpr;
