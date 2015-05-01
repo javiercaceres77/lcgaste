@@ -54,7 +54,7 @@ foreach($arr_directory as $file_name) {
 				if($obj_line_time->hour == $obj_file_datetime->hour)
 					if($objxml->hist) {			# this is a history line
 						if($objxml->hist->data[0]->d090)
-							pa($objxml->hist->data[0]->d090);
+							pa($objxml);
 						continue();
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
