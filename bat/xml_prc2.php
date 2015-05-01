@@ -126,6 +126,26 @@ function build_arr_times($obj_curr_datetime) {
 		}
 	}
 	
+	for($i = $min_d; $i < $max_d; $i++) {
+		$str_index = 'd'. add_zeroes2($i,3);
+		$arr_datetime = $obj_curr_datetime->plus_period('day',-$i);
+		$arr_datetime = $arr_datetime->calculate_start_of_period('day');
+		if($arr_datetime->timestamp > $floor_date->timestamp) {
+			$ret_array['d'][$str_index]['d'] = $arr_datetime->datetime;
+			$ret_array['d'][$str_index]['w'] = '';
+		}
+	}
+	
+	for($i = $min_m; $i < $max_m; $i++) {
+		$str_index = 'm'. add_zeroes2($i,3);
+		$arr_datetime = $obj_curr_datetime->plus_period('month',-$i);
+		$arr_datetime = $arr_datetime->calculate_start_of_period('month');
+		if($arr_datetime->timestamp > $floor_date->timestamp) {
+			$ret_array['m'][$str_index]['d'] = $arr_datetime->datetime;
+			$ret_array['m'][$str_index]['w'] = '';
+		}
+	}
+	
 	return $ret_array;
 }
 
