@@ -59,7 +59,7 @@ foreach($arr_directory as $file_name) {
 					if($objxml->hist) {			# this is a history line
 						foreach($objxml->hist->data[0] as $id => $value) {
 							if($arr_history_times[$id])
-								$arr_history_times[$id]['w'] = (float) $value / 2;
+								$arr_history_times[$id]['w'] = (float) $value;
 						}
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
