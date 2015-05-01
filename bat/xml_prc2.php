@@ -131,7 +131,7 @@ function build_arr_times($obj_curr_datetime) {
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
 			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
 			$ret_array[$str_index]['w'] = '';
-			$ret_array[$str_index]['t'] = 'h';
+			$ret_array[$str_index]['t'] = 'hour';
 		}
 	}
 	
@@ -142,7 +142,7 @@ function build_arr_times($obj_curr_datetime) {
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
 			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
 			$ret_array[$str_index]['w'] = '';
-			$ret_array[$str_index]['t'] = 'd';
+			$ret_array[$str_index]['t'] = 'day';
 		}
 	}
 	
@@ -153,7 +153,7 @@ function build_arr_times($obj_curr_datetime) {
 		if($arr_datetime->timestamp > $floor_date->timestamp) {
 			$ret_array[$str_index]['d'] = $arr_datetime->datetime;
 			$ret_array[$str_index]['w'] = '';
-			$ret_array[$str_index]['t'] = 'm';
+			$ret_array[$str_index]['t'] = 'mth';
 		}
 	}
 	
