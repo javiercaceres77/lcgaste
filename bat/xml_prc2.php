@@ -59,7 +59,7 @@ foreach($arr_directory as $file_name) {
 					if($objxml->hist) {			# this is a history line
 						foreach($objxml->hist->data[0] as $id => $value) {
 							if($arr_history_times[$id])
-								if($arr_history_times[$id]['t'] == 'h')
+								if($arr_history_times[$id]['t'] == 'hour')
 									$arr_history_times[$id]['w'] = (float) $value / 2;
 								else
 									$arr_history_times[$id]['w'] = (float) $value;
