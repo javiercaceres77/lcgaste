@@ -53,10 +53,12 @@ foreach($arr_directory as $file_name) {
 				# check that it is the same hour as some lines could be included in incorrect files.
 				if($obj_line_time->hour == $obj_file_datetime->hour)
 					if($objxml->hist) {			# this is a history line
-						pa($objxml);
-						break;
+						if($objxml->hist->data->0->d090)
+							pa($objxml->hist->data->0);
+						continue();
 					}
 					elseif($objxml->tmpr) {		# this is a regular line (history doesn't have temperature)
+						continue();
 						if($obj_line_time->minute == $this_min) {
 							if($objxml->tmpr <> 0 || $objxml->ch1->watts <> 0) {
 								$accum_temp+= (float) $objxml->tmpr;
