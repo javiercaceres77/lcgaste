@@ -113,7 +113,7 @@ foreach($arr_directory as $file_name) {
 function build_arr_times($obj_curr_datetime) {
 	$floor_date = new date_time('2015-02-06'); // do not measure any data before that date
 	$min_h = 4;	$max_h = 744;
-	$min_d = 1;	$max_d - 90;
+	$min_d = 1;	$max_d = 90;
 	$min_m = 1;	$max_m = 84;
 	$ret_array = array();
 	
