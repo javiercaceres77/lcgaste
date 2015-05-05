@@ -109,7 +109,7 @@ foreach($arr_directory as $file_name) {
 				if($arr_max[$arr_time_watt['t']] < $arr_time_watt['d']) {
 					$arr_ins['Period_Type'][] = $arr_time_watt['t'];
 					$arr_ins['Period_Datetime'][] = $arr_time_watt['d'];
-					$arr_ins['KWh'] = $arr_time_watt['w'];
+					$arr_ins['KWh'][] = $arr_time_watt['w'];
 				}
 			}
 			
