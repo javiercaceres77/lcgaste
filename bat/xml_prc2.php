@@ -20,7 +20,7 @@ $bin_path = '/home/javipi/bin/'; //'/media/usb/bin/';
 $num_files_to_process = 2;
 
 # scan directory
-$arr_directory = array('currxml_20150501_0500.dat'); //scandir($xml_files_path);
+$arr_directory = array('currxml_20150505_1100.dat'); //scandir($xml_files_path);
 # remove the last file (the one that is being written now)
 //array_pop($arr_directory);
 
