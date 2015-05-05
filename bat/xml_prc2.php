@@ -112,12 +112,14 @@ foreach($arr_directory as $file_name) {
 				}
 			}
 			
-			$ok_ins_hist = insert_array_db_multi('Accumulated_Wattage', $arr_ins);
-			$msg = 'Inserted history '. count($arr_ins['KWh']) . ' records';
-			if($ok_ins_hist)
-				write_log_db('Current Cost', 'INSERT OK', $msg, 'curr_cost_xml_processor.php');
-			else
-				write_log_db('Current Cost', 'INSERT ERROR', $msg, 'curr_cost_xml_processor.php');
+			if(count($arr_ins)) {
+				$ok_ins_hist = insert_array_db_multi('Accumulated_Wattage', $arr_ins);
+				$msg = 'Inserted history '. count($arr_ins['KWh']) . ' records';
+				if($ok_ins_hist)
+					write_log_db('Current Cost', 'INSERT OK', $msg, 'curr_cost_xml_processor.php');
+				else
+					write_log_db('Current Cost', 'INSERT ERROR', $msg, 'curr_cost_xml_processor.php');
+			}
 		}	//		if($file) {
 	
 		fclose($file);
