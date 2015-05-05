@@ -88,15 +88,33 @@ foreach($arr_directory as $file_name) {
 					}	//	elseif($objxml->tmpr) {
 				}	//	if($obj_line_time->hour == $obj_file_datetime->hour)
 			}	//	while(($line = fgets($file, 4096)) !== false) {
-			
-			pa($arr_history_times);
-			
+
 			# insert the last value after the file
 			if($count > 0) {
 				$arr_ins_regular['CC_Time'][] = $obj_file_datetime->odate->odate .' '. $obj_line_time->hour .':'. $this_min .':00';
 				$arr_ins_regular['Temperature'][] = $accum_temp / $count;
 				$arr_ins_regular['Wattage'][] = $accum_watt / $count;
 			}
+
+			# insert the historical data into the Accumulated table
+			# select the max datetimes for each data type:
+			$sql = 'SELECT MAX(PERIOD_DATETIME) AS MAX_PERIOD, PERIOD_TYPE FROM Accumulated_Wattage GROUP BY PERIOD_TYPE';
+			$sel_max = my_query($sql, $conex);
+			$arr_max = array();
+			while($record = my_fetch_array($sel_max))
+				$arr_max[$record['PERIOD_TYPE']] = $record['MAX_PERIOD'];
+			
+			$arr_ins = array();
+			foreach($arr_history_times as $arr_time_watt){
+				if($arr_max[$arr_time_watt['t']] < $arr_time_watt['d']) {
+					$arr_ins['Period_Type'][] = $arr_time_watt['t'];
+					$arr_ins['Period_Datetime'][] = $arr_time_watt['d'];
+					$arr_ins['KWh'] = $arr_time_watt['w']
+				}
+			}
+			
+			pa($arr_ins);
+			
 		}	//		if($file) {
 	
 		fclose($file);
