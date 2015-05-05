@@ -15,14 +15,14 @@ unset($_POST, $_GET);
 //$now = new date_time('now');
 
 # some variables use objects --------------------------------
-$xml_files_path = '/home/javipi/'; //ccxmls/';
+$xml_files_path = '/home/javipi/ccxmls/';
 $bin_path = '/home/javipi/bin/'; //'/media/usb/bin/';
-$num_files_to_process = 2;
+$num_files_to_process = 18;
 
 # scan directory
-$arr_directory = array('currxml_20150505_1100.dat'); //scandir($xml_files_path);
+$arr_directory = scandir($xml_files_path);
 # remove the last file (the one that is being written now)
-//array_pop($arr_directory);
+array_pop($arr_directory);
 
 foreach($arr_directory as $file_name) {
 	$num_files_to_process--;	if($num_files_to_process <= 0) break;
@@ -49,7 +49,6 @@ foreach($arr_directory as $file_name) {
 			
 			$arr_history_times = build_arr_times($obj_file_datetime);
 			//pa($arr_history_times);
-			#$arr_ins_history = array();
 			while(($line = fgets($file, 4096)) !== false) {
 				$objxml = new SimpleXMLElement($line);
 				$obj_line_time = new my_time($objxml->time);
@@ -119,24 +118,23 @@ foreach($arr_directory as $file_name) {
 				write_log_db('Current Cost', 'INSERT OK', $msg, 'curr_cost_xml_processor.php');
 			else
 				write_log_db('Current Cost', 'INSERT ERROR', $msg, 'curr_cost_xml_processor.php');
-			
 		}	//		if($file) {
 	
 		fclose($file);
-	exit();
-	//	$ok_ins_reg = insert_array_db_multi('Raw_Data', $arr_ins_regular);
+	
+		$ok_ins_reg = insert_array_db_multi('Raw_Data', $arr_ins_regular);
 		$msg = 'Inserted '. count($arr_ins_regular['CC_Time']) .' records from file: '. $file_name;
 		if($ok_ins_reg)
 		{
 			//rename($xml_files_path . $file_name, $bin_path . $file_name);					# move file to $bin_path
-	//		if(unlink($xml_files_path . $file_name))
-	//			echo 'borrado';
-	//		else
-	//			echo 'error ';
-	//		write_log_db('Current Cost', 'INSERT OK', $msg, 'curr_cost_xml_processor.php');
+			if(unlink($xml_files_path . $file_name))
+				echo 'borrado';
+			else
+				echo 'error ';
+			write_log_db('Current Cost', 'INSERT OK', $msg, 'curr_cost_xml_processor.php');
 		}
 		else {
-	//		write_log_db('Current Cost', 'INSERT ERROR', $msg, 'curr_cost_xml_processor.php');
+			write_log_db('Current Cost', 'INSERT ERROR', $msg, 'curr_cost_xml_processor.php');
 		}
 	}	//if($file_name <> '.' && $file_name <> '..')
 }	//foreach($arr_directory as $file_name) {
