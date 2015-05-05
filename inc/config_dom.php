@@ -6,7 +6,7 @@ $conf_images_path = 'img/';
 $conf_pictures_subpath = 'pictures/';
 $conf_photos_subpath = 'photos/';
 $conf_main_page = 'index.php';
-$conf_logs_path = '/var/www/lcgaste/logs/';
+$conf_logs_path = '/var/www/lcgaste/log/';
 $conf_mods_path = 'mod/';
 $conf_default_mod = 'home';
 
