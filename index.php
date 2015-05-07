@@ -15,46 +15,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 if($_GET['func'] == 'logout') session_unset();
 
-?>
-<!doctype html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
-<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
-<head>
-	
-	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
-			 More info: h5bp.com/b/378 -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-
-	<title><?= date('H:i:s'); ?> ::: Lcgaste.com :::</title>
-	<meta name="description" content="LCGaste Ltd" />
-	<meta name="keywords" content="LCGaste Rocaya ersmsk" />
-	<meta name="author" content="humans.txt">
-
-	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-
-	<!-- Facebook Metadata /-->
-	<!--<meta property="fb:page_id" content="" />
-	<meta property="og:image" content="" />
-	<meta property="og:description" content=""/>
-	<meta property="og:title" content=""/>-->
-
-	<!-- Google+ Metadata /-->
-	<meta itemprop="name" content="www.lcgaste.com">
-	<meta itemprop="description" content="lcgaste rocaya and other stuff">
-	<meta itemprop="image" content="">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-
-	<link rel="stylesheet" href="css/gumby.css">
-	<!--<link rel="stylesheet" href="css/main.css">-->
-
-	<script src="inc/js/libs/modernizr-2.6.2.min.js"></script>
-<?php
 # Includes ----------------------------------
 include 'inc/config.php';
 include $conf_include_path .'comm.php';
@@ -88,103 +48,108 @@ $now = new date_time('now');
 # Manage modules ----------------------------------
 if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 	refresh_users_modules(true);
-?>
-<script language="javascript" src="<?= $conf_include_path; ?>comm.js"></script>
-<script language="javascript" src="<?= $conf_include_path; ?>ajax.js"></script>
-</head>
 
-<body>
-	<div class="navcontain">
-		<div style="top: 0px;" class="pretty navbar unfixed" gumby-fixed="top" id="nav3">
-			<div class="row">
-				<a class="toggle" gumby-trigger="#nav3 > .row > ul" href="#"><i class="icon-menu"></i></a>
-				<h3 class="six columns"><a href="<?= $conf_main_page; ?>">www.lcgaste.com</a></h3>
-				<ul class="six columns">
-					<form action="<?= $conf_main_page; ?>?action=login" method="post" name="login_form"> 
-						<li class="append field"><input class="normal email input" placeholder="Email" type="email" id="user">
-								<span class="adjoined">@</span></li>
-						<li class="append field"><input class="normal password input" placeholder="password" type="password" id="pass">
-								<span class="adjoined">*</span></li>
-						<li class="pretty medium info btn"><button><i class="icon-lock-open"></i></button></li>
-					</form>
-				</ul>
-			</div>
+?><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="LCGaste Ltd" />
+	<meta name="keywords" content="LCGaste Rocaya ersmsk" />
+	<meta name="author" content="humans.txt">
+    
+	<link rel="icon" href="../../favicon.ico">
+
+    <title>::: Lcgaste.com ::: <?= date('H:i:s'); ?></title>>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://www.lcgaste.com">Lcgaste.com</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+		<div class="input-group">
+		  <input type="text" class="form-control" placeholder="Username" aria-describedby="usrname">
+		  <span class="input-group-addon" id="usrname">@</span>
 		</div>
-	</div>
-	<!-- Grab Google CDN's jQuery, fall back to local if offline -->
-	<!-- 2.0 for modern browsers, 1.10 for .oldie -->
-	<script>
-	var oldieCheck = Boolean(document.getElementsByTagName('html')[0].className.match(/\soldie\s/g));
-	if(!oldieCheck) {
-	document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"><\/script>');
-	} else {
-	document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
-	}
-	</script>
-	<script>
-	if(!window.jQuery) {
-	if(!oldieCheck) {
-	  document.write('<script src="inc/js/libs/jquery-2.0.2.min.js"><\/script>');
-	} else {
-	  document.write('<script src="inc/js/libs/jquery-1.10.1.min.js"><\/script>');
-	}
-	}
-	</script>
+		<div class="input-group">
+		  <input type="text" class="form-control" placeholder="Password" aria-describedby="pasapalabra">
+		  <span class="input-group-addon" id="pasapalabra"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+		</div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
 
-	<!--
-	Include gumby.js followed by UI modules followed by gumby.init.js
-	Or concatenate and minify into a single file -->
-	<script gumby-touch="inc/js/libs" src="inc/js/libs/gumby.js"></script>
-	<script src="inc/js/libs/ui/gumby.retina.js"></script>
-	<script src="inc/js/libs/ui/gumby.fixed.js"></script>
-	<script src="inc/js/libs/ui/gumby.skiplink.js"></script>
-	<script src="inc/js/libs/ui/gumby.toggleswitch.js"></script>
-	<script src="inc/js/libs/ui/gumby.checkbox.js"></script>
-	<script src="inc/js/libs/ui/gumby.radiobtn.js"></script>
-	<script src="inc/js/libs/ui/gumby.tabs.js"></script>
-	<script src="inc/js/libs/ui/gumby.navbar.js"></script>
-	<script src="inc/js/libs/ui/jquery.validation.js"></script>
-	<script src="inc/js/libs/gumby.init.js"></script>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Hello, world!</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+      </div>
+    </div>
 
-	<!--
-	Google's recommended deferred loading of JS
-	gumby.min.js contains gumby.js, all UI modules and gumby.init.js
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
 
-	Note: If you opt to use this method of defered loading,
-	ensure that any javascript essential to the initial
-	display of the page is included separately in a normal
-	script tag.
+      <hr>
 
-	<script type="text/javascript">
-	function downloadJSAtOnload() {
-	var element = document.createElement("script");
-	element.src = "js/libs/gumby.min.js";
-	document.body.appendChild(element);
-	}
-	if (window.addEventListener)
-	window.addEventListener("load", downloadJSAtOnload, false);
-	else if (window.attachEvent)
-	window.attachEvent("onload", downloadJSAtOnload);
-	else window.onload = downloadJSAtOnload;
-	</script> -->
+      <footer>
+        <p>&copy; Company 2014</p>
+      </footer>
+    </div> <!-- /container -->
 
-	<script src="inc/js/plugins.js"></script>
-	<script src="inc/js/main.js"></script>
 
-	<!-- Change UA-XXXXX-X to be your site's ID -->
-	<!--<script>
-	window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-	Modernizr.load({
-	  load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-	});
-	</script>-->
-
-	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
-	   chromium.org/developers/how-tos/chrome-frame-getting-started -->
-	<!--[if lt IE 7 ]>
-	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-	<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
-	<![endif]-->
-
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="<?= $conf_include_path; ?>js/bootstrap.min.js"></script>
+	<script language="javascript" src="<?= $conf_include_path; ?>comm.js"></script>
+	<script language="javascript" src="<?= $conf_include_path; ?>ajax.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
   </body>
 </html>
