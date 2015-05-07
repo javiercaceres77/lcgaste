@@ -62,7 +62,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
     
 	<link rel="icon" href="../../favicon.ico">
 
-    <title>::: Lcgaste.com ::: <?= date('H:i:s'); ?></title>>
+    <title>::: Lcgaste.com ::: <?= date('H:i:s'); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
