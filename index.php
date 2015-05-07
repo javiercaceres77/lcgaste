@@ -65,7 +65,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
     <title>::: Lcgaste.com ::: <?= date('H:i:s'); ?></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/main.css" rel="stylesheet">
 
