@@ -139,7 +139,34 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		</div>
         </div><!-- websites -->
 	  </div><!-- row -->
+	<div class="container">
+		<div class="row">
+			<div class="labs">
+				<div class="col-md-4">
+					pi pic
+				</div>
+				<div class="col-md-8">
+					<h3>Raspberry PI</h3>
+					<p>Some experiments with Raspberry PI</p>
+				</div>
+				<div class="col-md-8">
+					<h3>Sports Club manager</h3>
+					<p>Our Sports Club manager allows to manage bookings, users, payments, schedules, classes, etc.</p>
+				</div>
+				<div class="col-md-8">
+					padel pic
+				</div>
+				<div class="col-md-4">
+					arduino pic
+				</div>
+				<div class="col-md-8">
+					<h3>Arduino</h3>
+					<p>Arduino stuff we're working on</p>
+				</div>
 
+			</div>
+		</div>
+	</div>
       <hr>
 
       <footer>
