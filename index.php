@@ -122,7 +122,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		<div class="col-lg-4">
 		  <img class="img-circle" src="<?= $conf_images_path; ?>rocaya_capture.png" alt="www.rocaya.com" height="140" width="140">
 		  <h2>rocaya.com</h2>
-		  <p>Rock climbing, crags, routes, blog and photos about to climbing</p>
+		  <p>Rock climbing, crags, routes, blog and photos about climbing</p>
 		  <p><a class="btn btn-default" href="http://www.rocaya.com" role="button">Enter &raquo;</a></p>
 		</div>
 		<div class="col-lg-4">
