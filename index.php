@@ -119,24 +119,24 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
     <div class="container">
       <div class="row">
 	    <div class="websites">
-			<div class="col-lg-4">
-			  <img class="img-circle" src="<?= $conf_images_path; ?>rocaya_capture.png" alt="www.rocaya.com" height="140" width="140">
-			  <h2>rocaya.com</h2>
-			  <p>Rock climbing, crags, routes, blog and photos about to climbing</p>
-			  <p><a class="btn btn-default" href="http://www.rocaya.com" role="button">Enter &raquo;</a></p>
-			</div>
-			<div class="col-lg-4">
-			  <img class="img-circle" src="<?= $conf_images_path; ?>lcguest_capture.png" alt="www.lcguest.com" height="140" width="140">
-			  <h2>LCGuest</h2>
-			  <p>Stay with us. </p>
-			  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-		   </div>
-			<div class="col-lg-4">
-			  <img class="img-circle" src="<?= $conf_images_path; ?>ersmsk.png" alt="www.ersmsk.com" height="140" width="140">
-			  <h2>ERSMSK</h2>
-			  <p>ERS Global is an international project finance and energy consulting company, specialising in the delivery of engineering projects, energy resources consulting, procurement of project financing and government liaison to effect projects..</p>
-			  <p><a class="btn btn-default" href="#" role="button">Enter &raquo;</a></p>
-			</div>
+		<div class="col-lg-4">
+		  <img class="img-circle" src="<?= $conf_images_path; ?>rocaya_capture.png" alt="www.rocaya.com" height="140" width="140">
+		  <h2>rocaya.com</h2>
+		  <p>Rock climbing, crags, routes, blog and photos about to climbing</p>
+		  <p><a class="btn btn-default" href="http://www.rocaya.com" role="button">Enter &raquo;</a></p>
+		</div>
+		<div class="col-lg-4">
+		  <img class="img-circle" src="<?= $conf_images_path; ?>lcguest_capture.png" alt="www.lcguest.com" height="140" width="140">
+		  <h2>LCGuest</h2>
+		  <p>Stay with us. </p>
+		  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+		</div>
+		<div class="col-lg-4">
+		  <img class="img-circle" src="<?= $conf_images_path; ?>ersmsk.png" alt="www.ersmsk.com" height="140" width="140">
+		  <h2>ERSMSK</h2>
+		  <p>ERS Global is an international project finance and energy consulting company, specialising in the delivery of engineering projects, energy resources consulting, procurement of project financing and government liaison to effect projects..</p>
+		  <p><a class="btn btn-default" href="http://www.ersmsk.com" role="button">Enter &raquo;</a></p>
+		</div>
         </div><!-- websites -->
 	  </div><!-- row -->
 
@@ -153,8 +153,8 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="<?= $conf_include_path; ?>js/bootstrap.min.js"></script>
-	<script language="javascript" src="<?= $conf_include_path; ?>comm.js"></script>
-	<script language="javascript" src="<?= $conf_include_path; ?>ajax.js"></script>
+    <script language="javascript" src="<?= $conf_include_path; ?>comm.js"></script>
+    <script language="javascript" src="<?= $conf_include_path; ?>ajax.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
   </body>
