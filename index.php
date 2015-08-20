@@ -139,6 +139,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		</div>
         </div><!-- websites -->
 	  </div><!-- row -->
+	<!--  
 	<div class="container">
 		<div class="labs">
 			<div class="row">
@@ -171,7 +172,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		</div>
 	</div>
       <hr>
-
+      -->
       <footer>
         <p>&copy; Lcgaste ltd. <?= date('Y'); ?></p>
       </footer>
