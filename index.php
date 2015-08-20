@@ -106,16 +106,13 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-   
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+   <div class="jumbotron">
       <div class="container">
         <h1>LCGaste ltd.</h1>
         <p>IT consultancy and web development.</p>
         <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
       </div>
     </div>
-
     <div class="container">
       <div class="row">
 	    <div class="websites">
@@ -133,7 +130,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		</div>
 		<div class="col-lg-4">
 		  <img class="img-circle" src="<?= $conf_images_path; ?>ersmsk.png" alt="www.ersmsk.com" height="140" width="140">
-		  <h2>ERSMSK</h2>
+		  <h2>ERSMSK.com</h2>
 		  <p>ERS Global is an international project finance and energy consulting company, specialising in the delivery of engineering projects, energy resources consulting, procurement of project financing and government liaison to effect projects..</p>
 		  <p><a class="btn btn-default" href="http://www.ersmsk.com" role="button">Enter &raquo;</a></p>
 		</div>
@@ -177,7 +174,6 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
         <p>&copy; Lcgaste ltd. <?= date('Y'); ?></p>
       </footer>
     </div> <!-- /container -->
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
