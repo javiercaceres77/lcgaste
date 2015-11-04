@@ -106,69 +106,13 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-	<!-- Carousel   ================================================== -->
-   <div class="carousel slide" id="myCarousel" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li class="active" data-target="#myCarousel" data-slide-to="0"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-		<li data-target="#myCarousel" data-slide-to="3"></li>
-		<li data-target="#myCarousel" data-slide-to="4"></li>
-		<li data-target="#myCarousel" data-slide-to="5"></li>
-		<li data-target="#myCarousel" data-slide-to="6"></li>
-		<li data-target="#myCarousel" data-slide-to="7"></li>
-		<li data-target="#myCarousel" data-slide-to="8"></li>
-		<li data-target="#myCarousel" data-slide-to="9"></li>
-		<li data-target="#myCarousel" data-slide-to="10"></li>
-		<li data-target="#myCarousel" data-slide-to="11"></li>
-		<li data-target="#myCarousel" data-slide-to="12"></li>
-		<!--<li data-target="#myCarousel" data-slide-to="13"></li>
-		<li data-target="#myCarousel" data-slide-to="14"></li>-->
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <div class="container">
-		    <img src="<?= $conf_images_path; ?>/rooms/001RoomA5.jpg" class="img-responsive" alt="Responsive image">
-		    <!--<img class="first-slide" alt="First slide" src="<?= $conf_images_path; ?>/rooms/001RoomA5.jpg">
-            <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" role="button" href="#">Sign up today</a></p>
-            </div>-->
-          </div>
-        </div>
-        <div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/001RoomB4.PNG" class="img-responsive" alt="Responsive image"></div></div>
-        <div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/002RoomA4.jpg" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/002RoomB2.JPG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/003RoomA1.PNG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/003RoomB1.JPG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/004RoomA2.JPG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/004RoomB3.JPG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/005RoomA3.JPG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/006Breakfast.JPG" class="img-responsive" alt="Responsive image"></div></div>
-		<!--<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/007Breakfast2.JPG" class="img-responsive" alt="Responsive image"></div></div>-->
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/008Captura2.PNG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/009Bathroom1.PNG" class="img-responsive" alt="Responsive image"></div></div>
-		<div class="item"><div class="container"><img src="<?= $conf_images_path; ?>/rooms/010Bathroom2.PNG" class="img-responsive" alt="Responsive image"></div></div>
-      </div>
-      <a class="left carousel-control" role="button" href="#myCarousel" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" role="button" href="#myCarousel" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-	<!-- /.carousel -->
-   <!--<div class="jumbotron">
+    <div class="jumbotron">
       <div class="container">
         <h1>LCGaste ltd.</h1>
         <p>IT consultancy and web development.</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
       </div>
-    </div>-->
+    </div>
     <div class="container">
       <div class="row">
 	    <div class="websites">
