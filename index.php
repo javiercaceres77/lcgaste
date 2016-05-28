@@ -57,7 +57,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="LCGaste Ltd" />
-	<meta name="keywords" content="LCGaste Rocaya ersmsk" />
+	<meta name="keywords" content="LCGaste Rocaya ersmsk miltonrooms rooms milton keynes" />
 	<meta name="author" content="humans.txt">
     
 	<link rel="icon" href="../../favicon.ico">
@@ -110,7 +110,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
       <div class="container">
         <h1>LCGaste ltd.</h1>
         <p>IT consultancy and web development.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+       <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
       </div>
     </div>
     <div class="container">
@@ -123,10 +123,10 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		  <p><a class="btn btn-default" href="http://www.rocaya.com" role="button">Enter &raquo;</a></p>
 		</div>
 		<div class="col-lg-4">
-		  <img class="img-circle" src="<?= $conf_images_path; ?>lcguest_capture.png" alt="www.lcguest.com" height="140" width="140">
-		  <h2>LCGuest</h2>
-		  <p>Stay with us. </p>
-		  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+		  <img class="img-circle" src="<?= $conf_images_path; ?>MiltonCapture.JPG" alt="www.miltonrooms.com" height="140" width="140">
+		  <h2>MiltonRooms</h2>
+		  <p>Flexible and affordable accommodation in Milton Keynes in a private residence.</p>
+		  <p><a class="btn btn-default" href="http://www.miltonrooms.com" role="button" target="_blank">Enter &raquo;</a></p>
 		</div>
 		<div class="col-lg-4">
 		  <img class="img-circle" src="<?= $conf_images_path; ?>ersmsk.png" alt="www.ersmsk.com" height="140" width="140">
