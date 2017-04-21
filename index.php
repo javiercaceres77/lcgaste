@@ -132,7 +132,7 @@ if(!$_GET['mod']) $_GET['mod'] = $conf_default_mod;
 		  <img class="img-circle" src="<?= $conf_images_path; ?>ersmsk.png" alt="www.ersmsk.com" height="140" width="140">
 		  <h2>ERSMSK.com</h2>
 		  <p>ERS Global is an international project finance and energy consulting company, specialising in the delivery of engineering projects, energy resources consulting, procurement of project financing and government liaison to effect projects..</p>
-		  <p><a class="btn btn-default" href="http://www.ersmsk.com" role="button">Enter &raquo;</a></p>
+		  <p><a class="btn btn-default" href="http://www.lcgaste.com/ersmsk" role="button">Enter &raquo;</a></p>
 		</div>
         </div><!-- websites -->
 	  </div><!-- row -->
